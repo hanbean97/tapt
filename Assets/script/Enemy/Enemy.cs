@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
         if(isDamag == true)// 진동효과
         {
             damagetime += Time.deltaTime;
-            this.transform.position= new Vector2(nowPos+(70*(Mathf.Sin(150* Time.time) )* Time.deltaTime), this.transform.position.y);
+            this.transform.position= new Vector2(nowPos+(10*(Mathf.Sin(150* Time.time) )* Time.deltaTime), this.transform.position.y);
         if (damagetime> 1f)
             {
                 
