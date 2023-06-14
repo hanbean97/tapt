@@ -57,8 +57,8 @@ public class EnemysManager : Singltons<EnemysManager>
 
            if (bosss[bossindex].EnemyDeth == true && bossactiv == true && bosss[bossindex].gameObject.activeSelf == false)
             {
-                bossindex++;
-                if(bossindex > bosss.Length)
+                bossindex++;// 0, 1
+                if(bossindex > bosss.Length-1)//
                 {
                     bossindex = 0;
                 }

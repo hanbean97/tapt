@@ -449,10 +449,18 @@ public class aeraT : MonoBehaviour
     {
         setdata.activepiece.Initialize(setdata.datablock[0]);
         setdata.blockview();
-        for (int i =1; i < GameManager.Instance.width-1; i++)
+        for (int i =1; i < GameManager.Instance.height; i++)
         {
-            checker[i,0] = true;
-            GreyB[i, 0].SetActive(true);
+            if (checker[0, i] == false)
+            {
+                checker[0, i] = true;
+                GreyB[0, i].SetActive(true);
+            }
+            if (checker[GameManager.Instance.width - 1, i] == false)
+            {
+                checker[GameManager.Instance.width - 1, i] = true;
+                GreyB[GameManager.Instance.width - 1, i].SetActive(true);
+            }
         }
     }
     void simonSkill()
