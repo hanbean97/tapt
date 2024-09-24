@@ -32,8 +32,6 @@ public class GameManager : PersistentSingleton<GameManager>
         Point++;
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         gamestart = false;
@@ -42,8 +40,6 @@ public class GameManager : PersistentSingleton<GameManager>
         chchck = new bool[width, height];
       
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (gamestart == false)
