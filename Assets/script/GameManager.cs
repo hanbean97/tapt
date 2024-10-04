@@ -42,14 +42,6 @@ public class GameManager : PersistentSingleton<GameManager>
     }
     void Update()
     {
-        if (gamestart == false)
-        {
-            starttime += Time.deltaTime;
-            if (starttime > 3f )
-            {
-                gamestart = true;
-            }
-        }
 
     }
 
