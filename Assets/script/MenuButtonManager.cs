@@ -84,6 +84,7 @@ public class MenuButtonManager : MonoBehaviour
         AdManager.Instance.ShowRewardedAd();
         GameManager.Instance.hp = GameManager.Instance.startHp;
         GameManager.Instance.GameOver = false;
+        GameManager.Instance.gamestart = true;
         aera.aeraAllClear();
         SaveLoad.SaveGame();
         GameoverUI.SetActive(false);

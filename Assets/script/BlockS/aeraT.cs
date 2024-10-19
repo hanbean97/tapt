@@ -385,6 +385,7 @@ public class aeraT : MonoBehaviour
         if (GameoverCheck == true)// 게임오버 효과
         {
             GameManager.Instance.GameOver = true;
+            GameManager.Instance.gamestart = false;
             GameoverUI.SetActive(true);
             Debug.Log(" Gameover");
         }

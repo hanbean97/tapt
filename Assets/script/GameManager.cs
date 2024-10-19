@@ -42,7 +42,7 @@ public class GameManager : PersistentSingleton<GameManager>
     }
     void Update()
     {
-
+       
     }
 
     public void loadSetGameData(GmaeSaveData tData)

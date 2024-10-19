@@ -33,6 +33,7 @@ public class MainMenuScript : MonoBehaviour
         GameManager.Instance.loadSetGameData(null);
         GameManager.Instance.Loadch = false;// 뉴게임인걸 알림
         fade.fadoutScene(1);
+        GameManager.Instance.gamestart = true;
     }
     public void LoadGameBT()
     {
@@ -43,6 +44,7 @@ public class MainMenuScript : MonoBehaviour
             GameManager.Instance.loadSetGameData(gmaeSaveData);
             fade.fadoutScene(1);
         }
+        GameManager.Instance.gamestart = true;
     }
     public void ExitGameBT()
     {
