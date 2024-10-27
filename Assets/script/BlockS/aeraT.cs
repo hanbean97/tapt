@@ -29,6 +29,8 @@ public class aeraT : MonoBehaviour
     public GameObject GameoverUI;
     public GameObject UI;
     int Combo = 0;
+    bool isgameover = false;
+    public bool setBlock;
     void Start()
     {
         width = GameManager.Instance.width;
@@ -40,6 +42,10 @@ public class aeraT : MonoBehaviour
         if (GameManager.Instance.Loadch == true)
         {
             Combo = GameManager.Instance.nowcombo;
+        }
+        else
+        {
+            GameManager.Instance.hp = GameManager.Instance.startHp;
         }
         int a = 0;
         for (int j = 0; j < height; j++)
@@ -180,6 +186,7 @@ public class aeraT : MonoBehaviour
                             }
                         }
                         //벽돌 배치 성공효과
+                        isSetB();
                         setdata.SpawnPiece(); // 프리뷰블럭의 블록정보 초기화
                         ClearBluck(); //라인 체크후 제거
                         bossSkill();// 보스스킬
@@ -195,6 +202,7 @@ public class aeraT : MonoBehaviour
                 else if (tgrid[i, j] == curren && checker[i, j] == true)
                 {
                     // 블록있는곳 잘못터치효과= 배치 실패 효과
+                    Scenemamhincrit.Instance.StartShake(1f,1f);
                 }
             }
         }
@@ -384,11 +392,29 @@ public class aeraT : MonoBehaviour
 
         if (GameoverCheck == true)// 게임오버 효과
         {
+            GameOver();
+        }
+    }
+   
+    public void playerDamage()
+    {
+        GameManager.Instance.hp--;
+        if (GameManager.Instance.hp<1)
+        {
+            GameOver();
+        }
+    }
+    public void GameOver()
+    {
             GameManager.Instance.GameOver = true;
             GameManager.Instance.gamestart = false;
             GameoverUI.SetActive(true);
             Debug.Log(" Gameover");
-        }
+    }
+    public bool isSetB()
+    {
+        setBlock = true;
+        return setBlock;
     }
     public void aeraAllClear()//블록 전부 비활성화
     {

@@ -12,12 +12,16 @@ public class Scenemamhincrit : Singltons<Scenemamhincrit>
     private float countdown = 0f;
     float ShakeTime= 0f;
     private bool isshake = false;
+    [SerializeField] float baseAmplitudeGain;
+    [SerializeField]float baseFrequencyGain;
     protected override void Awake()
     {
         base.Awake();
 
         cmv= this.GetComponent<CinemachineVirtualCamera>();
         channelperin = cmv.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        channelperin.m_AmplitudeGain = baseAmplitudeGain;
+        channelperin.m_FrequencyGain = baseFrequencyGain;
     }
     
     private void Update()
@@ -32,23 +36,20 @@ public class Scenemamhincrit : Singltons<Scenemamhincrit>
                 countdown = 0f;
             }
         }
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            StartShake(0.5f,1f);
-        }
+       
     }
     public void StartShake(float intencity, float sTime)
     {
         channelperin.m_AmplitudeGain = intencity;//Æø
-        channelperin.m_FrequencyGain = frequency;//¼Óµµ
+        channelperin.m_FrequencyGain = frequency ;//¼Óµµ
 
-        isshake = true;
+        isshake = true; 
         ShakeTime = sTime;
     }
     void stoptShake()
     {
-        channelperin.m_FrequencyGain = 0;
-        channelperin.m_AmplitudeGain = 0;
+        channelperin.m_AmplitudeGain = baseAmplitudeGain;
+        channelperin.m_FrequencyGain = baseFrequencyGain;
         isshake = false;
     }
 }

@@ -8,20 +8,43 @@ public class EnemysManager : Singltons<EnemysManager>
     public BossEnmey[] bosss;
     List<int> enemiesindextable = new List<int>();
     List<int> bosssindextable =new List<int>();
-    int nowEnemyindex = 0;
+    public int nowEnemyindex = 0;
     public int bossindex =0;
     bool enemyactiv;
     public bool bossactiv;
     [SerializeField] int bossMeetNeed = 2;
-    bool bossMeet = false;
-    [SerializeField] int bossmeetpoint;
+    public bool bossMeet = false;
+    public int bossmeetpoint;
     [Range(0,15)]
     public int level;// ¿˙¿Â
-    // Start is called before the first frame update
+    public int nowEnemyHp;
+    public int nowEnemyMaxHp;
+    public bool firstgam;
     void Start()
     {
         enemyactiv = false;
-        bossactiv = false; 
+        bossactiv = false;
+        firstgam = false;
+        if (GameManager.Instance.Loadch == true)
+        {
+            bossMeet = GameManager.Instance.enemytype;
+            bossmeetpoint = GameManager.Instance.bossmeetpoint;
+            level = GameManager.Instance.nowlevel;
+            nowEnemyindex = GameManager.Instance.nowEnemy;
+            bossindex = GameManager.Instance.nowBoss;
+            nowEnemyHp = GameManager.Instance.Enemyhp;
+           
+        }
+        else
+        {
+            bossMeet = false;
+            bossmeetpoint =0;
+            level = 0;
+            nowEnemyindex = 0;
+            bossindex = 0;
+            nowEnemyHp = 0;
+         
+        }
     }
 
     // Update is called once per frame
@@ -68,8 +91,8 @@ public class EnemysManager : Singltons<EnemysManager>
                 level++;
             }
         }
+        NowEnemyHpView();
     }
-
 
     public void currentEnemyDamage(int damage)
     {
@@ -81,5 +104,18 @@ public class EnemysManager : Singltons<EnemysManager>
         {
             bosss[bossindex].EnemyDamage(damage);
         }    
+    }
+    public void NowEnemyHpView()
+    {
+        if (enemies[nowEnemyindex].gameObject.activeSelf == true)
+        {
+            nowEnemyMaxHp = enemies[nowEnemyindex].ViewMaxHp;
+            nowEnemyHp = enemies[nowEnemyindex].ViewHp;
+        }
+        if (bosss[bossindex].gameObject.activeSelf == true)
+        {
+            nowEnemyMaxHp = bosss[bossindex].ViewMaxHp;
+            nowEnemyHp = bosss[bossindex].ViewHp;
+        }
     }
 }

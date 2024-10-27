@@ -36,10 +36,12 @@ public class MenuButtonManager : MonoBehaviour
             Soundsetting.gameObject.SetActive(false);
         }
         menu.gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
     }
     public void MenuOpenBT()
     {
         menu.gameObject.SetActive(true);
+        Time.timeScale = 0f;
     }
     public void SoundsettingOpenBT()// 소리 설정이 켜질때 저장된 소리값만큼 표시
     {
@@ -53,7 +55,7 @@ public class MenuButtonManager : MonoBehaviour
     {
         Soundsetting.gameObject.SetActive(false);
     }
-
+     
     public void MainMenuGoBT()
     {
         fadeInOut.gameObject.SetActive(true);

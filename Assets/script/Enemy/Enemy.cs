@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]int StartEnemyHp;
     [SerializeField] int EnemyHp;
+    public int ViewHp { get { return EnemyHp; } }
+    public int ViewMaxHp;
     public Transform movePosition;
     public Transform sponPosition;
     protected  bool movech =false;
@@ -20,7 +22,13 @@ public class Enemy : MonoBehaviour
 
     public virtual void OnEnable()
     {
-        EnemyHp = StartEnemyHp +(StartEnemyHp * EnemysManager.Instance.level); 
+        ViewMaxHp = StartEnemyHp + (StartEnemyHp * EnemysManager.Instance.level);
+        EnemyHp = ViewMaxHp;
+        if(EnemysManager.Instance.firstgam == false &&GameManager.Instance.Loadch== true)
+        {
+            EnemyHp = GameManager.Instance.Enemyhp;
+            EnemysManager.Instance.firstgam = true;
+        }
         EnemyDeth = false;
         movech = false;
         this.transform.position = sponPosition.transform.position;

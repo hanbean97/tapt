@@ -1,15 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : PersistentSingleton<GameManager>
 {
     private int Point;//점수
     public int viewpoint { get { return Point; } set { Point = value; } }
-    private int playerHp;
-    public int hp { get { return playerHp; } set { Point = value; } }
+   [SerializeField]private int playerHp;
+    public int hp { get { return playerHp; } set { playerHp = value; } }
 
     public bool GameOver;
     // 블록이 있는곳을 체크
@@ -20,13 +19,19 @@ public class GameManager : PersistentSingleton<GameManager>
     public int height = 5;
     public int preview;
     public int savepiece;
-    public int startHp = 3;
+    public int startHp = 4;
     public List<int> bTable = new List<int>();// 프리뷰에 저장된 다음에 나올 블럭들을 저장
     public int nowcombo;
     public int volumeEnergyIndex;
     public bool gamestart;
     public bool Loadch;// 뉴게임인지 새게임인지 체크
     float starttime;
+    public int Enemyhp;
+    public int nowlevel;
+    public int nowEnemy;
+    public int nowBoss;
+    public bool enemytype;
+    public int bossmeetpoint;
     public void AddPoint()
     {
         Point++;
@@ -60,6 +65,12 @@ public class GameManager : PersistentSingleton<GameManager>
             volumeEnergyIndex = tData.volum;
             viewpoint = tData.nowpoint;
             GameOver = tData.gameover;
+            Enemyhp = tData.EnemyHp;
+            nowlevel = tData.Level;
+            nowEnemy = tData.nowenemy;
+            nowBoss = tData.nowboss;
+            enemytype = tData.EnemyType;
+            bossmeetpoint = tData.bosspoint;
         }
         else
         {// 기존 정보 초기화후 다시 설정
@@ -70,11 +81,17 @@ public class GameManager : PersistentSingleton<GameManager>
             redBch = new bool[width, height];
             greyBch = new bool[width, height];
             chchck = new bool[width, height];
-            hp = startHp;
+            playerHp = startHp;
             nowcombo = 0;
             volumeEnergyIndex = 3;
             viewpoint = 0;
             GameOver = false;
+            Enemyhp = 0;
+            nowlevel = 0;
+            nowEnemy = 0;
+            nowBoss = 0;
+            enemytype = false;
+            bossmeetpoint = 0;
         }
     }
 }
