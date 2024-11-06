@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afee5cad5c70f514b9e67fb89a7ac8c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartEnemyHp: 3
+  StartEnemyHp: 2
   EnemyHp: 0
   ViewMaxHp: 0
   movePosition: {fileID: 817675428}
@@ -2735,7 +2735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98dcab90a87990342a333302942fb7d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartEnemyHp: 10
+  StartEnemyHp: 5
   EnemyHp: 0
   ViewMaxHp: 0
   movePosition: {fileID: 817675428}
@@ -5204,7 +5204,9 @@ MonoBehaviour:
   EnemyDeth: 0
   speed: 0.5
   enemyType: 1
-  bossType: 0
+  bossType: 1
+  target: {fileID: 716692107}
+  aera: {fileID: 1968851323}
 --- !u!1 &1077611761
 GameObject:
   m_ObjectHideFlags: 0
@@ -9551,6 +9553,8 @@ MonoBehaviour:
   - {fileID: 1277023711}
   - {fileID: 1201726882}
   - {fileID: 500303348}
+  isCombo: 0
+  combowiewtime: 1
 --- !u!4 &1822728631
 Transform:
   m_ObjectHideFlags: 0
@@ -10987,6 +10991,7 @@ MonoBehaviour:
   GameoverUI: {fileID: 1423204376}
   UI: {fileID: 1065258169}
   setBlock: 0
+  UImana: {fileID: 1822728629}
 --- !u!1 &1984825556
 GameObject:
   m_ObjectHideFlags: 0

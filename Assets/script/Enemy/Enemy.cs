@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     public virtual void OnEnable()
     {
-        ViewMaxHp = StartEnemyHp + (StartEnemyHp * EnemysManager.Instance.level);
+        ViewMaxHp = StartEnemyHp + (int)(StartEnemyHp * EnemysManager.Instance.level*0.5f);
         EnemyHp = ViewMaxHp;
         if(EnemysManager.Instance.firstgam == false &&GameManager.Instance.Loadch== true)
         {
@@ -80,15 +80,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void EnemyAttak(int damage)
-    {
-        GameManager.Instance.hp -= damage;
-        if (GameManager.Instance.hp <= 0 && GameManager.Instance.GameOver == false)
-        {
-            GameManager.Instance.GameOver = true;
-            SaveLoad.SaveGame();
-        }
-    }
 }
 
 

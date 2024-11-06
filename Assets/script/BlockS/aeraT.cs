@@ -31,6 +31,8 @@ public class aeraT : MonoBehaviour
     int Combo = 0;
     bool isgameover = false;
     public bool setBlock;
+    bool iscombo;
+    [SerializeField] UImanager UImana; 
     void Start()
     {
         width = GameManager.Instance.width;
@@ -197,6 +199,7 @@ public class aeraT : MonoBehaviour
                     else
                     {
                         //배치실패시 나타나는 효과
+                        Scenemamhincrit.Instance.StartShake(1f, 1f);
                     }
                 }
                 else if (tgrid[i, j] == curren && checker[i, j] == true)
@@ -286,6 +289,7 @@ public class aeraT : MonoBehaviour
         if (combosuccess == true)// 콤보
         {
             Combo++;
+            UImana.isCombo = true;
         }
         else// 콤보 실패시 초기화
         {
@@ -329,6 +333,11 @@ public class aeraT : MonoBehaviour
         }
         
 
+    }
+    public bool IsCombo()
+    {
+        iscombo = true;   
+        return iscombo;
     }
 
     void CheckIfPlayerLost()//하나씩 넣어봐서 게임오버 여부 체크

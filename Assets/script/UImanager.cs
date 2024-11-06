@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,10 @@ public class UImanager : MonoBehaviour
     float Stimer=0;
     [SerializeField] Image[] playerHpObj;
     int playhp=0;
-    // Start is called before the first frame update
+    public bool isCombo = false;
+    bool isviewCombo = false;
+    [SerializeField]float combowiewtime= 1f;
+     float combotime;
     void Start()
     {
     }
@@ -74,7 +78,7 @@ public class UImanager : MonoBehaviour
                 }
                 else
                 {
-                    playerHpObj[i].gameObject.SetActive(false);
+                    playerHpObj[i].gameObject.SetActive(false); 
                 }
             }
         }
@@ -82,5 +86,34 @@ public class UImanager : MonoBehaviour
     void ComboView()
     {
         Combo.text = "Combo :" + GameManager.Instance.nowcombo.ToString();
+        if (isviewCombo == false &&isCombo == true)
+        {
+            isCombo = false;
+            isviewCombo = true;
+            Combo.gameObject.SetActive(true);
+        }
+
+        if(isviewCombo == true)
+        {
+            combotime += Time.deltaTime;
+            Combo.transform.localScale = Vector2.Lerp(Vector2.one, Vector2.one * 1.5f, combotime / combowiewtime);
+            Combo.color = new Color(Combo.color.r, Combo.color.g, Combo.color.b, combotime / combowiewtime);
+            if (isCombo == true)
+            {
+                isCombo = false;
+                combotime = 0;
+            }
+
+            if (combotime >= combowiewtime)
+            {
+                Combo.transform.localScale = Vector2.one;
+                Combo.color = new Color(Combo.color.r, Combo.color.g, Combo.color.b, 0);
+                combotime = 0;
+                isCombo = false;
+                Combo.gameObject.SetActive(false);
+                isviewCombo = false;
+            }
+        }
+      
     }
 }
