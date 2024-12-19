@@ -1053,10 +1053,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Volume: 2
-  bgmcilp: {fileID: 0}
+  bgmcilp:
+  - {fileID: 8300000, guid: 6a8987bef5e37f248a30df0cdd89b187, type: 3}
+  - {fileID: 8300000, guid: f68a12d31f2e0a24b8285d02fd703ea0, type: 3}
+  - {fileID: 8300000, guid: fc9c20377f68771448794357e6b1700b, type: 3}
+  - {fileID: 8300000, guid: 15b6d3e0e99e87c4ebcf5d4581f9a2f1, type: 3}
   sfxcilp:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 8e2339fbd70e33742887e36bc6babaa8, type: 3}
+  - {fileID: 8300000, guid: 365c5d09f7072c9409c3a22baae7c672, type: 3}
   channels: 3
 --- !u!1 &716692105
 GameObject:

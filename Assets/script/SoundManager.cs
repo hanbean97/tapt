@@ -6,7 +6,7 @@ public class SoundManager : PersistentSingleton<SoundManager>
 {
     [SerializeField] float Volume;
     [Header("BGM")]
-    [SerializeField] AudioClip bgmcilp;
+    [SerializeField] AudioClip[] bgmcilp;
     AudioSource bgmPlayer;
     [Header("SFX")]
     [SerializeField] AudioClip[] sfxcilp;
@@ -14,6 +14,7 @@ public class SoundManager : PersistentSingleton<SoundManager>
     int channelIndex;
     AudioSource[] sfxPlayer;
 
+    public enum bgm { StartScreen,Boss};
     public enum Sfx { }
 
     private void Start()
@@ -30,7 +31,8 @@ public class SoundManager : PersistentSingleton<SoundManager>
         bgmPlayer.playOnAwake = false;
         bgmPlayer.loop = true;
         bgmPlayer.volume = Volume;
-        bgmPlayer .clip = bgmcilp;
+        bgmPlayer .clip = bgmcilp[0];
+    
         // 효과음 플레이어 초기화
         GameObject sfxObj = new GameObject("sfxPlayer");
         sfxObj.transform.parent = transform;
@@ -55,5 +57,13 @@ public class SoundManager : PersistentSingleton<SoundManager>
             sfxPlayer[LoopIndex].Play();
             break;
         }
+    }
+    public void changeBGM()
+    {
+        bgmPlayer.clip = bgmcilp[0];
+    }
+    public void VolumeChange(int volume)
+    {
+        bgmPlayer.volume = volume;
     }
 }
