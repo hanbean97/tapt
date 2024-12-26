@@ -69,7 +69,7 @@ public class MenuButtonManager : MonoBehaviour
             GameManager.Instance.volumeEnergyIndex++;
             SaveLoad.SaveGame();
         }
-
+        SoundManager.Instance.VolumeChange(GameManager.Instance.volumeEnergyIndex);
     }
     public void volumeDOWNBT()
     {
@@ -79,6 +79,7 @@ public class MenuButtonManager : MonoBehaviour
             volumeEnergy[GameManager.Instance.volumeEnergyIndex].SetActive(false);
             SaveLoad.SaveGame();
         }
+        SoundManager.Instance.VolumeChange(GameManager.Instance.volumeEnergyIndex);
     }
 
     public void ReStartGame()// 블록과 체력을 맨처음 상태로 돌리고 그대로 시작

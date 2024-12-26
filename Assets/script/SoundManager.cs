@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SoundManager : PersistentSingleton<SoundManager>
 {
@@ -14,12 +15,15 @@ public class SoundManager : PersistentSingleton<SoundManager>
     int channelIndex;
     AudioSource[] sfxPlayer;
 
-    public enum bgm { StartScreen,Boss};
-    public enum Sfx { }
+    public enum Bgm { StartScreen,Boss,Loding,Usually };
+    public enum Sfx { LevelUp, Attack, Laser ,Die, Talk}
 
     private void Start()
     {
         Init();
+
+        VolumeChange(GameManager.Instance.volumeEnergyIndex);
+        
     }
 
     void Init()
@@ -59,9 +63,14 @@ public class SoundManager : PersistentSingleton<SoundManager>
             break;
         }
     }
-    public void changeBGM()
+    public void changeBGM(Bgm bgm)
     {
-        bgmPlayer.clip = bgmcilp[0];
+        bgmPlayer.clip = bgmcilp[(int)bgm];
+        bgmPlayer.Play();
+    }
+    public void StopBGM()
+    {
+        bgmPlayer.Stop();
     }
     public void VolumeChange(int volume)
     {

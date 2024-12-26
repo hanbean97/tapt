@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : PersistentSingleton<GameManager>
+public class GameManager : Singltons<GameManager>
 {
     private int Point;//Á¡¼ö
     public int viewpoint { get { return Point; } set { Point = value; } }
@@ -36,19 +36,16 @@ public class GameManager : PersistentSingleton<GameManager>
     {
         Point++;
     }
-
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         gamestart = false;
         redBch = new bool[width, height];
         greyBch = new bool[width, height];
         chchck = new bool[width, height];
-      
+        DontDestroyOnLoad(gameObject);
     }
-    void Update()
-    {
-       
-    }
+   
 
     public void loadSetGameData(GmaeSaveData tData)
     {

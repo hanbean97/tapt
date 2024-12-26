@@ -1060,6 +1060,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 15b6d3e0e99e87c4ebcf5d4581f9a2f1, type: 3}
   sfxcilp:
   - {fileID: 8300000, guid: 8e2339fbd70e33742887e36bc6babaa8, type: 3}
+  - {fileID: 8300000, guid: 7ffa0b85ed21e064b80e7aa8794b89b7, type: 3}
+  - {fileID: 8300000, guid: bb86ca4a25202ac47a26cc24f57dac2e, type: 3}
+  - {fileID: 8300000, guid: 831a206310216fa4786df4062604eaae, type: 3}
   - {fileID: 8300000, guid: 365c5d09f7072c9409c3a22baae7c672, type: 3}
   channels: 3
 --- !u!1 &716692105
