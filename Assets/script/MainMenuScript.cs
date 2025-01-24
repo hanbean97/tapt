@@ -12,7 +12,6 @@ public class MainMenuScript : MonoBehaviour
     void Start()
     {
         AdManager.Instance.ShowBanner();
-
     }
 
     // Update is called once per frame
@@ -31,7 +30,7 @@ public class MainMenuScript : MonoBehaviour
     public void NewGameBT()
     {
         GameManager.Instance.loadSetGameData(null);
-        GameManager.Instance.Loadch = false;// 뉴게임인걸 알림
+        GameManager.Instance.Loadch = false;// ?????????? ????
         fade.fadoutScene(1);
         GameManager.Instance.gamestart = true;
     }

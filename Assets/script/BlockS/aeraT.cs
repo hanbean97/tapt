@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class aeraT : MonoBehaviour
 {
-    //블록의 생성할수있는 판의 크기
+    //?????? ???????????? ???? ????
     public int width;
     public int height;
-    //데이터
-    static Transform[,] tgrid;// 자식들(소환할 위치)을 관리할 트랜스폼
+    //??????
+    static Transform[,] tgrid;// ??????(?????? ????)?? ?????? ????????
     private bool[,] checker;
     Transform CurrentTouch;
     public GameObject RedBlock;
     public GameObject GreyBlock;
     public GameObject effectblock;
-    //블럭들의 보여주는것을 관리하는 게임 오브젝트
+    //???????? ???????????? ???????? ???? ????????
     GameObject[,] redB;
     GameObject[,] GreyB;
-    // 터치시 나올 블럭을 보여줌
+    // ?????? ???? ?????? ??????
     public previewbluck setdata;
     Vector3 Mouseposition;
-    // 블럭을 저장하여 원할때 꺼내 사용하기위한 클래스
+    // ?????? ???????? ?????? ???? ???????????? ??????
     public BlockSave blockSave;
-    // 라인제거시 효과 
+    // ?????????? ???? 
     public GameObject LineClear;
     [SerializeField] float xLineoffset;
     [SerializeField] float yLineoffset;
@@ -32,6 +32,8 @@ public class aeraT : MonoBehaviour
     bool isgameover = false;
     public bool setBlock;
     bool iscombo;
+    bool scoresuppression=false;
+    public bool ScSup { get { return scoresuppression; } }
     [SerializeField] UImanager UImana; 
     void Start()
     {
@@ -60,7 +62,7 @@ public class aeraT : MonoBehaviour
                 GreyB[i, j] = Instantiate(GreyBlock, tgrid[i, j]);
                 redB[i, j].SetActive(false);
                 GreyB[i, j].SetActive(false);
-                //로드 정보가 있을시 추가로 정보를 입력한다
+                //???? ?????? ?????? ?????? ?????? ????????
                 if (GameManager.Instance.Loadch == true)
                 {
                     if (GameManager.Instance.redBch[i, j] == true)
@@ -104,8 +106,8 @@ public class aeraT : MonoBehaviour
                     if (hit.collider != null && UI.activeSelf != true &&  GameoverUI.activeSelf != true)
                     {
                         CurrentTouch = hit.transform;
-                        instbluck(hit.transform);// 터치부분 
-                        CheckIfPlayerLost();// 게임오버체크
+                        instbluck(hit.transform);// ???????? 
+                        CheckIfPlayerLost();// ????????????
 
                     }
                     break;
@@ -115,7 +117,7 @@ public class aeraT : MonoBehaviour
 #endif
 
 
-        if (Input.GetMouseButtonDown(0) && GameManager.Instance.GameOver == false) // 터치레이로 바꿀예정
+        if (Input.GetMouseButtonDown(0) && GameManager.Instance.GameOver == false) // ?????????? ????????
         {
             Mouseposition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -124,31 +126,31 @@ public class aeraT : MonoBehaviour
             if (hit.collider != null && UI.activeSelf != true)
             {
                 CurrentTouch = hit.transform;
-                instbluck(hit.transform);// 터치부분 
+                instbluck(hit.transform);// ???????? 
                 
-                CheckIfPlayerLost();// 게임오버체크
+                CheckIfPlayerLost();// ????????????
             }
         }
 
-        if (setdata.saveBTch == true && GameManager.Instance.GameOver == false)//블록을 세이브 했을 경우 게임오버 체크
+        if (setdata.saveBTch == true && GameManager.Instance.GameOver == false)//?????? ?????? ???? ???? ???????? ????
         {
             CheckIfPlayerLost();
-            Savearea();//블록을 스톡했을때 데이터를 저장
+            Savearea();//?????? ?????????? ???????? ????
             SaveLoad.SaveGame();
         }
     }
 
-    void instbluck(Transform curren)// 블록 소환 함수
+    void instbluck(Transform curren)// ???? ???? ????
     {
         for (int j = 0; j < height; j++)
         {
             for (int i = 0; i < width; i++)
             {
-                if (tgrid[i, j] == curren && checker[i, j] == false)// 터치한 부분 찾기
+                if (tgrid[i, j] == curren && checker[i, j] == false)// ?????? ???? ????
                 {
                     bool dontinst = true;
-                    foreach (Vector2Int offs in setdata.activepiece.cells)// 배치실패 체크
-                    {// 활성불가한 사항 여기다가
+                    foreach (Vector2Int offs in setdata.activepiece.cells)// ???????? ????
+                    {// ?????????? ???? ????????
                         if ((offs.x + i) < 0 || (offs.x + i) >= width || (offs.y + j) < 0 || (offs.y + j) >= height)
                         {
                             dontinst = false;
@@ -163,7 +165,7 @@ public class aeraT : MonoBehaviour
                         }
                     }
 
-                    if (dontinst == true)//배치 
+                    if (dontinst == true)//???? 
                     {
                         foreach (Vector2Int offs in setdata.activepiece.cells)
                         {
@@ -171,7 +173,7 @@ public class aeraT : MonoBehaviour
                             {
                                 if (checker[offs.x + i, offs.y + j] == false)
                                 {
-                                    if (offs.x == 0 && offs.y == 0)//블록 배치
+                                    if (offs.x == 0 && offs.y == 0)//???? ????
                                     {
                                         checker[i, j] = true;
                                         redB[i, j].SetActive(true);
@@ -187,24 +189,24 @@ public class aeraT : MonoBehaviour
                                 }
                             }
                         }
-                        //벽돌 배치 성공효과
+                        //???? ???? ????????
                         isSetB();
-                        setdata.SpawnPiece(); // 프리뷰블럭의 블록정보 초기화
-                        ClearBluck(); //라인 체크후 제거
-                        bossSkill();// 보스스킬
-                        Savearea();// 배치할때 현재 게임매니저에 상황을 저장
+                        setdata.SpawnPiece(); // ???????????? ???????? ??????
+                        ClearBluck(); //???? ?????? ????
+                        bossSkill();// ????????
+                        Savearea();// ???????? ???? ???????????? ?????? ????
                         SaveLoad.SaveGame();
                        
                     }
                     else
                     {
-                        //배치실패시 나타나는 효과
+                        //?????????? ???????? ????
                         Scenemamhincrit.Instance.StartShake(1f, 1f);
                     }
                 }
                 else if (tgrid[i, j] == curren && checker[i, j] == true)
                 {
-                    // 블록있는곳 잘못터치효과= 배치 실패 효과
+                    // ?????????? ????????????= ???? ???? ????
                     Scenemamhincrit.Instance.StartShake(1f,1f);
                 }
             }
@@ -214,21 +216,21 @@ public class aeraT : MonoBehaviour
 
 
 
-    void ClearBluck()// 라인체크+제거
+    void ClearBluck()// ????????+????
     {
-        int widthsum = 0;//가로줄 체크
-        int heightsum = 0;// 세로줄 체크
-        int bonuspoint = 0;// 제거된 라인 추가점수
-        bool combosuccess = false;// 콤보 성공여부
-        // 제거할 라인을 가리킴
+        int widthsum = 0;//?????? ????
+        int heightsum = 0;// ?????? ????
+        int bonuspoint = 0;// ?????? ???? ????????
+        bool combosuccess = false;// ???? ????????
+        // ?????? ?????? ??????
         bool[] Wclearline = new bool[height];
         bool[] Hclearline = new bool[width];
         int totalpoint =0;
         for (int j = 0; j < height; j++)
         {
-            for (int i = 0; i < width; i++)//가로줄을 체크
+            for (int i = 0; i < width; i++)//???????? ????
             {
-                if (i == 0)// 다음라인을 체크할시 0으로 초기화
+                if (i == 0)// ?????????? ???????? 0???? ??????
                 {
                     Wclearline[j] = false;
                     widthsum = 0;
@@ -236,49 +238,49 @@ public class aeraT : MonoBehaviour
 
                 if (checker[i, j] == true)
                 {
-                    widthsum++;//가로줄에있는 블록의 갯수만큼 +
+                    widthsum++;//???????????? ?????? ???????? +
                 }
-                if (widthsum == width)// 가로줄과 크기가 같으면 해당라인 제거 효과
+                if (widthsum == width)// ???????? ?????? ?????? ???????? ???? ????
                 {
                     Wclearline[j] = true;
-                    bonuspoint++;// 라인한번에 여러개 제거시 보너스점수
-                    GameManager.Instance.AddPoint();// 라인 제거시 1점 + 클리어시 효과
+                    bonuspoint++;// ?????????? ?????? ?????? ??????????
+                    GameManager.Instance.AddPoint();// ???? ?????? 1?? + ???????? ????
                     totalpoint++;
                     GameObject xlineeffect = Instantiate(LineClear, new Vector3(tgrid[i, j].transform.position.x + xLineoffset, tgrid[i, j].transform.position.y, tgrid[i, j].transform.position.z), Quaternion.identity);
-                    Destroy(xlineeffect, 0.3f);//라인제거 효과 소환
-                    combosuccess = true;//콤보 성공
+                    Destroy(xlineeffect, 0.3f);//???????? ???? ????
+                    combosuccess = true;//???? ????
                 }
 
             }
         }
         for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < height; j++)//세로줄을 체크
+            for (int j = 0; j < height; j++)//???????? ????
             {
-                if (j == 0)// 다음라인을 체크할시 0으로 초기화
+                if (j == 0)// ?????????? ???????? 0???? ??????
                 {
                     Hclearline[i] = false;
                     heightsum = 0;
                 }
                 if (checker[i, j] == true)
                 {
-                    heightsum++;// 세로줄 체크
+                    heightsum++;// ?????? ????
                 }
-                if (heightsum == height)// 세로줄과 크기가 같으면 해당라인 제거 효과
+                if (heightsum == height)// ???????? ?????? ?????? ???????? ???? ????
                 {
                     Hclearline[i] = true;
-                    bonuspoint++;// 라인한번에 여러개 제거시 보너스점수
-                    GameManager.Instance.AddPoint();// 라인 제거시 1점 
+                    bonuspoint++;// ?????????? ?????? ?????? ??????????
+                    GameManager.Instance.AddPoint();// ???? ?????? 1?? 
                     totalpoint++;
                     GameObject hlineeffect = Instantiate(LineClear, new Vector3(tgrid[i, j].transform.position.x, tgrid[i, j].transform.position.y + yLineoffset, tgrid[i, j].transform.position.z),
-                          Quaternion.Euler(0, 0, 90));//라인제거 효과 소환
+                          Quaternion.Euler(0, 0, 90));//???????? ???? ????
                     Destroy(hlineeffect, 0.3f);
                     combosuccess = true;
 
                 }
             }
         }
-        if (bonuspoint > 2)// 3줄이상 한번에 제거시 2배 점수 계산상 총 6개의 줄을 한번에삭제가능
+        if (bonuspoint > 2)// 3?????? ?????? ?????? 2?? ???? ?????? ?? 6???? ???? ??????????????
         {
             for (int i = 0; i < bonuspoint; i++)
             {
@@ -286,28 +288,28 @@ public class aeraT : MonoBehaviour
                 totalpoint++;
             }
         }
-        if (combosuccess == true)// 콤보
+        if (combosuccess == true)// ????
         {
             Combo++;
             UImana.isCombo = true;
         }
-        else// 콤보 실패시 초기화
+        else// ???? ?????? ??????
         {
             Combo = 0;
         }
-        if (Combo > 2)// 콤보유지하면 추가점수 1점
+        if (Combo > 2)// ???????????? ???????? 1??
         {
             GameManager.Instance.AddPoint();
             totalpoint++;
         }
 
-        for (int j = 0; j < height; j++)// 블록을 비활성화
+        for (int j = 0; j < height; j++)// ?????? ????????
         {
             for (int i = 0; i < width; i++)
             {
-                if (Hclearline[i] == true)//해당라인 비활성화
+                if (Hclearline[i] == true)//???????? ????????
                 {
-                    if (redB[i, j].activeSelf == true)// 빨간블록 제거시 추가 점수 1점+ 밸런스 조정을위해 잠시 주석처리
+                    if (redB[i, j].activeSelf == true)// ???????? ?????? ???? ???? 1??+ ?????? ?????????? ???? ????????
                     {
                         // GameManager.Instance.AddPoint(); totalpoint++;
                     }
@@ -315,7 +317,7 @@ public class aeraT : MonoBehaviour
                     redB[i, j].SetActive(false);
                     checker[i, j] = false;
                 }
-                if (Wclearline[j] == true)//해당라인 비활성화
+                if (Wclearline[j] == true)//???????? ????????
                 {
                     if (redB[i, j].activeSelf == true)
                     {
@@ -340,21 +342,21 @@ public class aeraT : MonoBehaviour
         return iscombo;
     }
 
-    void CheckIfPlayerLost()//하나씩 넣어봐서 게임오버 여부 체크
+    void CheckIfPlayerLost()//?????? ???????? ???????? ???? ????
     {
         bool GameoverCheck = true;
         for (int j = 0; j < height; j++)
         {
             for (int i = 0; i < width; i++)
             {
-                for (int r = 0; r < Data.RotationMatrix.Length; r++)//블록의 4방향을 돌려가면서 체크
+                for (int r = 0; r < Data.RotationMatrix.Length; r++)//?????? 4?????? ?????????? ????
                 {
-                    bool caninstblock = false;// 블록대입 실패 여부
-                    foreach (Vector2Int offs in setdata.activepiece.cells)//프리뷰 블록안의 정보를 넣으면서 체크
+                    bool caninstblock = false;// ???????? ???? ????
+                    foreach (Vector2Int offs in setdata.activepiece.cells)//?????? ???????? ?????? ???????? ????
                     {
                         if ((offs.x + i) < 0 || (offs.x + i) >= width || (offs.y + j) < 0 || (offs.y + j) >= height)
                         {
-                            caninstblock = true;// 대입 가능하면 대입가능하다소 알림
+                            caninstblock = true;// ???? ???????? ?????????????? ????
                         }
 
                         if ((offs.x + i) >= 0 && (offs.x + i) < width && (offs.y + j) >= 0 && (offs.y + j) < height)
@@ -365,11 +367,11 @@ public class aeraT : MonoBehaviour
                             }
                         }
                     }
-                    bool caninstsaveblock = false;//세이브 블록대입 실패 여부 , 세이브블록이 없는경우가 있으서 따로체크
+                    bool caninstsaveblock = false;//?????? ???????? ???? ???? , ???????????? ?????????? ?????? ????????
                     if (blockSave.piece.cells != null)
                     {
 
-                        foreach (Vector2Int offs in blockSave.piece.cells)//세이브 블럭안의 정보를 넣으면서 체크
+                        foreach (Vector2Int offs in blockSave.piece.cells)//?????? ???????? ?????? ???????? ????
                         {
                             if ((offs.x + i) < 0 || (offs.x + i) >= width || (offs.y + j) < 0 || (offs.y + j) >= height)
                             {
@@ -386,12 +388,12 @@ public class aeraT : MonoBehaviour
                         }
                     }
 
-                    if (caninstblock == false || caninstsaveblock == false)//둘중하나라도 가능하면 게임계속
+                    if (caninstblock == false || caninstsaveblock == false)//???????????? ???????? ????????
                     {
                         GameoverCheck = false;
                     }
-                    setdata.activepiece.Rotater(1);// 가능한블록 돌아가면서 체크
-                    if (blockSave.piece.cells != null)// 저장된 블록이 있으면 저장된 블럭도 돌아가면서 체크
+                    setdata.activepiece.Rotater(1);// ?????????? ?????????? ????
+                    if (blockSave.piece.cells != null)// ?????? ?????? ?????? ?????? ?????? ?????????? ????
                     {
                         blockSave.piece.Rotater(1);
                     }
@@ -399,7 +401,7 @@ public class aeraT : MonoBehaviour
             }
         }
 
-        if (GameoverCheck == true)// 게임오버 효과
+        if (GameoverCheck == true)// ???????? ????
         {
             GameOver();
         }
@@ -425,7 +427,7 @@ public class aeraT : MonoBehaviour
         setBlock = true;
         return setBlock;
     }
-    public void aeraAllClear()//블록 전부 비활성화
+    public void aeraAllClear()//?? ???
     {
         for (int j = 0; j < height; j++)
         {
@@ -437,7 +439,7 @@ public class aeraT : MonoBehaviour
             }
         }
     }
-    public void Savearea()// 게임의 데이터를 게임매니져에 보낸다
+    public void Savearea()// ?????? ???????? ???????????? ??????
     {
         for (int j = 0; j < height; j++)
         {
@@ -469,13 +471,16 @@ public class aeraT : MonoBehaviour
     {
         if (EnemysManager.Instance.bosss[EnemysManager.Instance.bossindex].EnemyDeth == false && EnemysManager.Instance.bossactiv == true)
         {
-            switch (EnemysManager.Instance.bosss[EnemysManager.Instance.bossindex].bossType)// 보드 관련 보스 스킬
+            switch (EnemysManager.Instance.bosss[EnemysManager.Instance.bossindex].bossType)// ???? ???? ???? ????
             {
                 case BossType.sinmon:
                     simonSkill();
                     break;
                 case BossType.BigMeteo:
                     bigMeteobossSkill();
+                    break;
+                case BossType.oneclick:
+                    OneClickSkill();
                     break;
             }
         }
@@ -516,7 +521,31 @@ public class aeraT : MonoBehaviour
             }
         }
     }
+    
+    void OneClickSkill()
+    {
+        Vector2Int skillrange = new Vector2Int(Random.Range(0, GameManager.Instance.width), Random.Range(0, GameManager.Instance.height));
+        for (int j = 0; j < height; j++)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                if (i == skillrange.x && j == skillrange.y)
+                {
+                    redB[i, j].SetActive(false);
+                    GreyB[i, j].SetActive(false);
+                    checker[i, j] = false;
+                    continue;
+                }
+                    
+                redB[i, j].SetActive(true);
+                GreyB[i, j].SetActive(true);
+                checker[i, j] = true;
+            }
+        }
 
+        Scenemamhincrit.Instance.StartShake(1,1);
+    }
+    
 }
 
 

@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
                 movech = true;
             }
         }
-        if(isDamag == true)// 진동효과
+        if(isDamag == true)// ????????
         {
             damagetime += Time.deltaTime;
             this.transform.position= new Vector2(nowPos+(10*(Mathf.Sin(150* Time.time) )* Time.deltaTime), this.transform.position.y);
@@ -92,5 +92,6 @@ public enum BossType
 {
     sinmon,
     BigMeteo,
+    oneclick,
     none
 }

@@ -9,9 +9,8 @@ public class raycast2D : MonoBehaviour
     Transform CurrentTouch;
     void Start()
     {
-        
     }
-
+    
     void Update()
     {
 

@@ -10,7 +10,7 @@ public class UImanager : MonoBehaviour
     public TextMeshProUGUI PointUI;
     public TextMeshProUGUI Combo;
     [SerializeField] Image HpBar;
-    float nowHp =1;//Çöhp
+    float nowHp =1;//??hp
     [SerializeField] Image setTimer;
     [SerializeField] aeraT aera;
     [SerializeField] float settime;
@@ -62,7 +62,7 @@ public class UImanager : MonoBehaviour
                 setTimer.color = Color.white;
             }
             setTimer.fillAmount =(1f-( Stimer / settime));
-            setTimer.color = Color.Lerp(setTimer.color, Color.red, setTimer.fillAmount); ;
+            setTimer.color = Color.Lerp(Color.red, Color.white, setTimer.fillAmount); ;
         }
     }
     void PlayerHpview()
