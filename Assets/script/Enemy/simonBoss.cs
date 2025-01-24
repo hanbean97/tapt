@@ -19,7 +19,8 @@ public class simonBoss : BossEnmey
             switch(i%2)
             {
                 case 0:
-                  //n-dis
+                    //n-dis
+                   // Mathf.SmoothStep(,,);
                     break;
                 case 1:
                     break; 
