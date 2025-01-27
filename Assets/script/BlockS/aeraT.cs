@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class aeraT : MonoBehaviour
@@ -33,8 +34,11 @@ public class aeraT : MonoBehaviour
     public bool setBlock;
     bool iscombo;
     bool scoresuppression=false;
-    public bool ScSup { get { return scoresuppression; } }
-    [SerializeField] UImanager UImana; 
+    bool oneclickBossOn=false;
+    public bool OneClickBossOnOff { get { return oneclickBossOn; } }
+    [SerializeField] UImanager UImana;
+    [SerializeField] TMP_Text NewScore;
+    [SerializeField] TMP_Text LastScore;
     void Start()
     {
         width = GameManager.Instance.width;
@@ -244,7 +248,6 @@ public class aeraT : MonoBehaviour
                 {
                     Wclearline[j] = true;
                     bonuspoint++;// ?????????? ?????? ?????? ??????????
-                    GameManager.Instance.AddPoint();// ???? ?????? 1?? + ???????? ????
                     totalpoint++;
                     GameObject xlineeffect = Instantiate(LineClear, new Vector3(tgrid[i, j].transform.position.x + xLineoffset, tgrid[i, j].transform.position.y, tgrid[i, j].transform.position.z), Quaternion.identity);
                     Destroy(xlineeffect, 0.3f);//???????? ???? ????
@@ -270,7 +273,6 @@ public class aeraT : MonoBehaviour
                 {
                     Hclearline[i] = true;
                     bonuspoint++;// ?????????? ?????? ?????? ??????????
-                    GameManager.Instance.AddPoint();// ???? ?????? 1?? 
                     totalpoint++;
                     GameObject hlineeffect = Instantiate(LineClear, new Vector3(tgrid[i, j].transform.position.x, tgrid[i, j].transform.position.y + yLineoffset, tgrid[i, j].transform.position.z),
                           Quaternion.Euler(0, 0, 90));//???????? ???? ????
@@ -284,7 +286,6 @@ public class aeraT : MonoBehaviour
         {
             for (int i = 0; i < bonuspoint; i++)
             {
-                GameManager.Instance.AddPoint();
                 totalpoint++;
             }
         }
@@ -299,7 +300,6 @@ public class aeraT : MonoBehaviour
         }
         if (Combo > 2)// ???????????? ???????? 1??
         {
-            GameManager.Instance.AddPoint();
             totalpoint++;
         }
 
@@ -331,7 +331,19 @@ public class aeraT : MonoBehaviour
         }
         if (totalpoint!=0)
         {
-            EnemysManager.Instance.currentEnemyDamage(totalpoint);
+            if(scoresuppression ==false)
+            {
+                for (int i =0; i<totalpoint; i++)
+                {
+                    GameManager.Instance.AddPoint();
+                }
+                EnemysManager.Instance.currentEnemyDamage(totalpoint);
+            }
+            else
+            {
+                GameManager.Instance.AddPoint();
+                EnemysManager.Instance.currentEnemyDamage(1);
+            }
         }
         
 
@@ -417,10 +429,19 @@ public class aeraT : MonoBehaviour
     }
     public void GameOver()
     {
-            GameManager.Instance.GameOver = true;
-            GameManager.Instance.gamestart = false;
-            GameoverUI.SetActive(true);
-            Debug.Log(" Gameover");
+        GameManager.Instance.GameOver = true;
+        GameManager.Instance.gamestart = false;
+        GameoverUI.SetActive(true);
+        if (GameManager.Instance.viewpoint > GameManager.Instance.highscore[0])
+        {
+            NewScore.gameObject.SetActive(true);
+        }
+        else
+        {
+            NewScore.gameObject.SetActive(false);
+        }
+        LastScore.text = $"{GameManager.Instance.viewpoint}";
+        Debug.Log(" Gameover");
     }
     public bool isSetB()
     {
@@ -481,8 +502,15 @@ public class aeraT : MonoBehaviour
                     break;
                 case BossType.oneclick:
                     OneClickSkill();
+                    oneclickBossOn = true;
                     break;
             }
+        }
+
+        if(EnemysManager.Instance.bossactiv == false)
+        {
+            oneclickBossOn = false;
+            scoresuppression = false;
         }
     }
 
@@ -524,6 +552,11 @@ public class aeraT : MonoBehaviour
     
     void OneClickSkill()
     {
+        setdata.activepiece.Initialize(setdata.datablock[0]);
+        setdata.blockview();
+        if (oneclickBossOn == false)
+            return;
+        scoresuppression = true;
         Vector2Int skillrange = new Vector2Int(Random.Range(0, GameManager.Instance.width), Random.Range(0, GameManager.Instance.height));
         for (int j = 0; j < height; j++)
         {
@@ -542,8 +575,7 @@ public class aeraT : MonoBehaviour
                 checker[i, j] = true;
             }
         }
-
-        Scenemamhincrit.Instance.StartShake(1,1);
+        Scenemamhincrit.Instance.StartShake(1,0.4f);
     }
     
 }

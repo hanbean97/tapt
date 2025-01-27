@@ -9,7 +9,6 @@ public class MenuButtonManager : MonoBehaviour
     public GameObject volume;
     public aeraT aera;
     public GameObject GameoverUI;
-
     GameObject[] volumeEnergy;
     public fadeInOut fadeInOut;
     // Start is called before the first frame update
@@ -97,5 +96,7 @@ public class MenuButtonManager : MonoBehaviour
         SaveLoad.SaveGame();
         fadeInOut.gameObject.SetActive(true);
         fadeInOut.fadoutScene(0);
+
+
     }
 }

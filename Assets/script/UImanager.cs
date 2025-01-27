@@ -14,6 +14,7 @@ public class UImanager : MonoBehaviour
     [SerializeField] Image setTimer;
     [SerializeField] aeraT aera;
     [SerializeField] float settime;
+    float NowSetTime;
     float Stimer=0;
     [SerializeField] Image[] playerHpObj;
     int playhp=0;
@@ -23,6 +24,7 @@ public class UImanager : MonoBehaviour
      float combotime;
     void Start()
     {
+        NowSetTime = settime;
     }
 
     // Update is called once per frame
@@ -53,15 +55,31 @@ public class UImanager : MonoBehaviour
                 Stimer = 0;
                 aera.setBlock = false;
                 setTimer.color = Color.white;
+                if(aera.OneClickBossOnOff == true)
+                {
+                    NowSetTime = 2f;
+                }
+                else
+                {
+                    NowSetTime = settime;
+                }
             }
 
-            if (Stimer >= settime)
+            if (Stimer >= NowSetTime)
             {
                 Stimer = 0;
                 aera.playerDamage();
                 setTimer.color = Color.white;
+                if (aera.OneClickBossOnOff == true)
+                {
+                    NowSetTime = 2f;
+                }
+                else
+                {
+                    NowSetTime = settime;
+                }
             }
-            setTimer.fillAmount =(1f-( Stimer / settime));
+            setTimer.fillAmount =(1f-( Stimer / NowSetTime));
             setTimer.color = Color.Lerp(Color.red, Color.white, setTimer.fillAmount); ;
         }
     }

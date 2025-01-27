@@ -32,6 +32,9 @@ public class GameManager : Singltons<GameManager>
     public int nowBoss;
     public bool enemytype;
     public int bossmeetpoint;
+    public int[] highscore;
+    public string[] rankname;
+    [SerializeField] int MaxRankList =10;
     public void AddPoint()
     {
         Point++;
@@ -43,6 +46,8 @@ public class GameManager : Singltons<GameManager>
         redBch = new bool[width, height];
         greyBch = new bool[width, height];
         chchck = new bool[width, height];
+        highscore = new int[MaxRankList];
+        rankname = new string[MaxRankList];
         DontDestroyOnLoad(gameObject);
     }
    
@@ -68,6 +73,8 @@ public class GameManager : Singltons<GameManager>
             nowBoss = tData.nowboss;
             enemytype = tData.EnemyType;
             bossmeetpoint = tData.bosspoint;
+            highscore = tData.HighScore;
+            rankname = tData.rankName;
         }
         else
         {// 기존 정보 초기화후 다시 설정
@@ -89,6 +96,8 @@ public class GameManager : Singltons<GameManager>
             nowBoss = 0;
             enemytype = false;
             bossmeetpoint = 0;
+            highscore = null;
+            rankname = null;
         }
     }
 }
