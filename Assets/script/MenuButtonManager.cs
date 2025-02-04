@@ -11,6 +11,7 @@ public class MenuButtonManager : MonoBehaviour
     public GameObject GameoverUI;
     GameObject[] volumeEnergy;
     public fadeInOut fadeInOut;
+    [SerializeField] GameObject RankRegist;
     // Start is called before the first frame update
     void Start()
     {
@@ -91,12 +92,19 @@ public class MenuButtonManager : MonoBehaviour
         SaveLoad.SaveGame();
         GameoverUI.SetActive(false);
     }
-    public void NewGameStart()//게임 초기화후 시작화면으로
+    public void FinishGame()//게임 끝
     {
         SaveLoad.SaveGame();
+        
+        RankRegist.SetActive(true);
+    }
+
+    public void GoMainMenu()
+    {
+
+
         fadeInOut.gameObject.SetActive(true);
         fadeInOut.fadoutScene(0);
-
-
     }
+
 }

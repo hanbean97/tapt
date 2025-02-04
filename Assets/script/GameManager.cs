@@ -35,6 +35,7 @@ public class GameManager : Singltons<GameManager>
     public int[] highscore;
     public string[] rankname;
     [SerializeField] int MaxRankList =10;
+    public Dictionary<string,int> RankScore;
     public void AddPoint()
     {
         Point++;

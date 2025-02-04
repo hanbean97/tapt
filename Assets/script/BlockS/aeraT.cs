@@ -432,13 +432,18 @@ public class aeraT : MonoBehaviour
         GameManager.Instance.GameOver = true;
         GameManager.Instance.gamestart = false;
         GameoverUI.SetActive(true);
-        if (GameManager.Instance.viewpoint > GameManager.Instance.highscore[0])
+
+        if(GameManager.Instance.viewpoint > GameManager.Instance.highscore[10]) 
         {
-            NewScore.gameObject.SetActive(true);
-        }
-        else
-        {
-            NewScore.gameObject.SetActive(false);
+            if (GameManager.Instance.viewpoint > GameManager.Instance.highscore[0])
+            {
+                NewScore.gameObject.SetActive(true);
+            }
+            else
+            {
+                NewScore.gameObject.SetActive(false);
+            }
+
         }
         LastScore.text = $"{GameManager.Instance.viewpoint}";
         Debug.Log(" Gameover");
