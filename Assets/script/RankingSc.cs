@@ -9,14 +9,14 @@ public class RankingSc : MonoBehaviour
     [SerializeField] Transform RankMenu;
     private void Start()
     {
-        if (GameManager.Instance.rankname.Length != 0)
+        if (GameManager.Instance.RankScore != null && GameManager.Instance.RankScore.Count != 0)
         {
-            for (int i = 0; i < GameManager.Instance.rankname.Length; i++)
+            for (int i = 0; i < GameManager.Instance.RankScore.Count; i++)
             {
                 GameObject ranker = Instantiate(RankPrefab, RankMenu);
                 TextMeshPro[] RankText = ranker.GetComponentsInChildren<TextMeshPro>();
-                RankText[0].text = GameManager.Instance.rankname[i];
-                RankText[1].text = GameManager.Instance.highscore[i].ToString();
+                RankText[0].text = GameManager.Instance.RankScore[i].Item1;
+                RankText[1].text = GameManager.Instance.RankScore[i].Item2.ToString();
             }
         }
     }

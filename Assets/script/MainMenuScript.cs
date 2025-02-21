@@ -8,13 +8,11 @@ public class MainMenuScript : MonoBehaviour
     public fadeInOut fade;
     public GameObject Rankingboard;
     public Button LoadButton;
-    // Start is called before the first frame update
     void Start()
     {
         AdManager.Instance.ShowBanner();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (GameManager.Instance.GameOver == true)

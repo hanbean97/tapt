@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 
 public class MenuButtonManager : MonoBehaviour
@@ -12,6 +14,7 @@ public class MenuButtonManager : MonoBehaviour
     GameObject[] volumeEnergy;
     public fadeInOut fadeInOut;
     [SerializeField] GameObject RankRegist;
+    [SerializeField] TMP_InputField nametextfield;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,8 @@ public class MenuButtonManager : MonoBehaviour
         {
             volumeEnergy[i] = volume.transform.GetChild(i).gameObject;
         }
+        //ÅØ½ºÆ® Æ¯Á¤¹®ÀÚ¸¸ ÀÔ·ÂÇÏ°Ô ÇÏ´Â ÄÚµå
+        nametextfield.onValueChanged.AddListener((w) => nametextfield.text = Regex.Replace(w, @"[^0-9a-zA-Z°¡-ÆR]",""));
     }
 
     // Update is called once per frame
@@ -95,16 +100,28 @@ public class MenuButtonManager : MonoBehaviour
     public void FinishGame()//°ÔÀÓ ³¡
     {
         SaveLoad.SaveGame();
-        
-        RankRegist.SetActive(true);
+        if(GameManager.Instance.viewpoint > GameManager.Instance.RankScore[GameManager.Instance.RankScore.Count-1].Item2
+            || GameManager.Instance.RankScore.Count < GameManager.Instance.MaxRankList)
+        {
+            RankRegist.SetActive(true);
+        }
+        else
+        {
+            fadeInOut.gameObject.SetActive(true);
+            fadeInOut.fadoutScene(0);
+        }
     }
 
-    public void GoMainMenu()
+    public void RegistAndHome()
     {
-
-
+        if(nametextfield.text =="")
+        {
+            nametextfield.text = "aaa";
+        }
+        GameManager.Instance.RankScore.Add((nametextfield.text,GameManager.Instance.viewpoint));
+        GameManager.Instance.RankScore.Sort((a, b) => a.Item2.CompareTo(b.Item2));
+        RankRegist.SetActive(false);
         fadeInOut.gameObject.SetActive(true);
         fadeInOut.fadoutScene(0);
     }
-
 }

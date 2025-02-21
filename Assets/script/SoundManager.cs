@@ -23,7 +23,7 @@ public class SoundManager : PersistentSingleton<SoundManager>
         Init();
 
         VolumeChange(GameManager.Instance.volumeEnergyIndex);
-        
+        changeBGM(Bgm.StartScreen);
     }
 
     void Init()

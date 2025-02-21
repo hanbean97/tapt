@@ -22,8 +22,7 @@ public class GmaeSaveData // 게임의 데이터를 저장할 클래스
     public int nowenemy;
     public int nowboss;
     public int bosspoint;
-    public int[] HighScore;
-    public string[] rankName;
+    public List<(string,int)> ranker;
     public GmaeSaveData()
     {
         saveredB = new bool[GameManager.Instance.width, GameManager.Instance.height];
@@ -46,8 +45,7 @@ public class GmaeSaveData // 게임의 데이터를 저장할 클래스
         nowenemy = EnemysManager.Instance.nowEnemyindex;
         nowboss = EnemysManager.Instance.bossindex;
         bosspoint = EnemysManager.Instance.bossmeetpoint;
-        HighScore =GameManager.Instance.highscore;
-        rankName = GameManager.Instance.rankname;
+        ranker = GameManager.Instance.RankScore;
     }
 
 }
