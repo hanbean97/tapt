@@ -23,6 +23,7 @@ public class GmaeSaveData // 게임의 데이터를 저장할 클래스
     public int nowboss;
     public int bosspoint;
     public List<(string,int)> ranker;
+    public bool onesavelifech;
     public GmaeSaveData()
     {
         saveredB = new bool[GameManager.Instance.width, GameManager.Instance.height];
@@ -46,6 +47,7 @@ public class GmaeSaveData // 게임의 데이터를 저장할 클래스
         nowboss = EnemysManager.Instance.bossindex;
         bosspoint = EnemysManager.Instance.bossmeetpoint;
         ranker = GameManager.Instance.RankScore;
+        onesavelifech = GameManager.Instance.OneSaveLife;
     }
 
 }

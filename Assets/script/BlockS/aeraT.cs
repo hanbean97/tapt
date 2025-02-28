@@ -39,6 +39,7 @@ public class aeraT : MonoBehaviour
     [SerializeField] UImanager UImana;
     [SerializeField] TMP_Text NewScore;
     [SerializeField] TMP_Text LastScore;
+    [SerializeField] GameObject rewardBT;
     void Start()
     {
         width = GameManager.Instance.width;
@@ -432,7 +433,15 @@ public class aeraT : MonoBehaviour
         GameManager.Instance.GameOver = true;
         GameManager.Instance.gamestart = false;
         GameoverUI.SetActive(true);
-        if (GameManager.Instance.viewpoint > GameManager.Instance.RankScore[0].Item2)
+        if(GameManager.Instance.OneSaveLife == false)
+        {
+            rewardBT.SetActive(true);
+        }
+        else
+        {
+            rewardBT.SetActive(false);
+        }
+        if (GameManager.Instance.RankScore  == null|| GameManager.Instance.viewpoint > GameManager.Instance.RankScore[0].Item2)
         {
             NewScore.gameObject.SetActive(true);
         }

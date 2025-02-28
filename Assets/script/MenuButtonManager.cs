@@ -26,14 +26,7 @@ public class MenuButtonManager : MonoBehaviour
         //ÅØ½ºÆ® Æ¯Á¤¹®ÀÚ¸¸ ÀÔ·ÂÇÏ°Ô ÇÏ´Â ÄÚµå
         nametextfield.onValueChanged.AddListener((w) => nametextfield.text = Regex.Replace(w, @"[^0-9a-zA-Z°¡-ÆR]",""));
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-    }
-
+ 
     public void MenuCloseBT()
     {
         if (Soundsetting.activeSelf == true)
@@ -96,6 +89,7 @@ public class MenuButtonManager : MonoBehaviour
         aera.aeraAllClear();
         SaveLoad.SaveGame();
         GameoverUI.SetActive(false);
+        GameManager.Instance.OneSaveLife =true;
     }
     public void FinishGame()//°ÔÀÓ ³¡
     {
@@ -120,6 +114,7 @@ public class MenuButtonManager : MonoBehaviour
         }
         GameManager.Instance.RankScore.Add((nametextfield.text,GameManager.Instance.viewpoint));
         GameManager.Instance.RankScore.Sort((a, b) => a.Item2.CompareTo(b.Item2));
+       SaveLoad.SaveGame();
         RankRegist.SetActive(false);
         fadeInOut.gameObject.SetActive(true);
         fadeInOut.fadoutScene(0);

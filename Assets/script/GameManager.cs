@@ -25,7 +25,6 @@ public class GameManager : Singltons<GameManager>
     public int volumeEnergyIndex;
     public bool gamestart;
     public bool Loadch;// 뉴게임인지 새게임인지 체크
-    float starttime;
     public int Enemyhp;
     public int nowlevel;
     public int nowEnemy;
@@ -34,6 +33,7 @@ public class GameManager : Singltons<GameManager>
     public int bossmeetpoint;
     public int MaxRankList =10;
     public List<(string,int)> RankScore;//순위 이름 점수
+    public bool OneSaveLife = false;
     public void AddPoint()
     {
         Point++;
@@ -88,6 +88,7 @@ public class GameManager : Singltons<GameManager>
             enemytype = tData.EnemyType;
             bossmeetpoint = tData.bosspoint;
             RankScore = tData.ranker;
+            OneSaveLife = tData.onesavelifech;
         } 
         else
         {// 기존 정보 초기화후 다시 설정
@@ -100,7 +101,6 @@ public class GameManager : Singltons<GameManager>
             chchck = new bool[width, height];
             playerHp = startHp;
             nowcombo = 0;
-            volumeEnergyIndex = 3;
             viewpoint = 0;
             GameOver = false;
             Enemyhp = 0;
@@ -109,6 +109,7 @@ public class GameManager : Singltons<GameManager>
             nowBoss = 0;
             enemytype = false;
             bossmeetpoint = 0;
+            OneSaveLife = false;
         }
     }
 }
