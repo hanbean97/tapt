@@ -5,45 +5,39 @@ using UnityEngine;
 public class simonBoss : BossEnmey
 {
     [SerializeField] Transform[] ball;
-    [SerializeField] float balldistance;
     [SerializeField] float ballspeed;
-    float Sinmove;
-    byte bo4;
+    [SerializeField] float nextPostime;
+    float timer;
+    Vector2[] nextPos = new Vector2[4];
     private void Start()
     {
         base.bossType = BossType.sinmon;
+        for (int i = 0; i < ball.Length; i++)
+        {
+            nextPos[i] = new Vector2(Random.Range(-0.5f, 6.5f), Random.Range(-0, 5.5f));
+        }
     }
     public override void Update()
     {
-        Sinmove = Mathf.Sin(Time.deltaTime);
         base.Update();
-        for (int i = 0; i < ball.Length; i++)
-        {
-            switch(i%2)
-            {
-                case 0:
-                    //n-dis
-                    ball[i].position = new Vector2(ball[i].position.x + Sinmove, ball[i].position.y + Sinmove);
-
-                    ball[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
-                    break;
-                case 1:
-                    ball[i].position = new Vector2(ball[i].position.x - Sinmove, ball[i].position.y - Sinmove);
-                    if(Sinmove>0)
-                    {
-                        ball[i].GetComponent<SpriteRenderer>().sortingOrder = 2;
-                    }     
-                    break; 
-
-            }
-
-           // ball[i].transform 
-        }
-       
+        BallMove();
     }
 
-    float DisCalcul()
+    void BallMove()
     {
-        return 0;
+        timer += Time.deltaTime;
+        if (timer> nextPostime)
+        {
+            for (int i = 0; i < ball.Length; i++)
+            {
+                nextPos[i] = new Vector2(Random.Range(-0.5f,6.5f), Random.Range(-0,5.5f));  
+            }
+            timer = 0;
+        }
+
+        for (int i = 0; i < ball.Length; i++)
+        {
+            ball[i].position = Vector2.Lerp(ball[i].position, nextPos[i], ballspeed * Time.deltaTime);;
+        }
     }
 }

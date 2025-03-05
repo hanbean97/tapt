@@ -47,21 +47,21 @@ public class GameManager : Singltons<GameManager>
         chchck = new bool[width, height];
 
         DontDestroyOnLoad(gameObject);
+        BasicSaveData settingSaveData = SaveLoad.BasicLoadGame();
+        GameManager.Instance.PlayerSettingLoad(settingSaveData);
+        GmaeSaveData tData = SaveLoad.LoadGame();
+        loadSetGameData(tData);
     }
-    private void Start()
+  
+    public void PlayerSettingLoad(BasicSaveData bData)
     {
-        PlayerSettingLoad();
-    }
-    public void PlayerSettingLoad()
-    {
-        GmaeSaveData gmaeSaveData = SaveLoad.LoadGame();
-        if (gmaeSaveData != null)
+        if (bData != null)
         {
-            volumeEnergyIndex = gmaeSaveData.volum;
-            RankScore = gmaeSaveData.ranker;
+            volumeEnergyIndex = bData.volume;
+            RankScore = bData.ranker;
         }
         else
-        { 
+        {
             volumeEnergyIndex = 2;
             RankScore = new List<(string, int)>();
         }

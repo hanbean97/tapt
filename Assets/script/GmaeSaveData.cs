@@ -7,7 +7,7 @@ public class GmaeSaveData // 게임의 데이터를 저장할 클래스
 {
     public bool[,] saveredB;
     public bool[,] saveGreyB;
-    public int previewbluckpiece;// 이부분 수정 해야함
+    public int previewbluckpiece;
     public int BlockSavepice;
     public bool[,] check;
     public int HP;
@@ -49,5 +49,15 @@ public class GmaeSaveData // 게임의 데이터를 저장할 클래스
         ranker = GameManager.Instance.RankScore;
         onesavelifech = GameManager.Instance.OneSaveLife;
     }
-
+}
+[System.Serializable]
+public class BasicSaveData
+{
+    public int volume;
+    public List<(string, int)> ranker;
+    public  BasicSaveData()
+    {
+        volume = GameManager.Instance.volumeEnergyIndex;
+        ranker = GameManager.Instance.RankScore;
+    }
 }

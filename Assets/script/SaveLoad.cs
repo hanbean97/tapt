@@ -33,6 +33,31 @@ public static class SaveLoad
             return null;
         }
     }
+    public static void BasicSaveGame()
+    {
+        string path = Application.persistentDataPath + "bData.crr";
 
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream fss = new FileStream(path, FileMode.Create);
+        BasicSaveData basicData = new BasicSaveData();
+        formatter.Serialize(fss, basicData);
+        fss.Close();
+    }
+    public static BasicSaveData BasicLoadGame()
+    {
+        string path = Application.persistentDataPath + "bData.crr";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream fss = new FileStream(path, FileMode.Open);
+            BasicSaveData basicData = formatter.Deserialize(fss) as BasicSaveData;
+            fss.Close();
+            return basicData;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
 

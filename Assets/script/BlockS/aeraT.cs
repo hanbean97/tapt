@@ -441,7 +441,7 @@ public class aeraT : MonoBehaviour
         {
             rewardBT.SetActive(false);
         }
-        if (GameManager.Instance.RankScore  == null|| GameManager.Instance.viewpoint > GameManager.Instance.RankScore[0].Item2)
+        if (GameManager.Instance.RankScore.Count  == 0|| GameManager.Instance.viewpoint > GameManager.Instance.RankScore[0].Item2)
         {
             NewScore.gameObject.SetActive(true);
         }

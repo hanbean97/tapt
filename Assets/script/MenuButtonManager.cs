@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuButtonManager : MonoBehaviour
 {
@@ -15,18 +16,27 @@ public class MenuButtonManager : MonoBehaviour
     public fadeInOut fadeInOut;
     [SerializeField] GameObject RankRegist;
     [SerializeField] TMP_InputField nametextfield;
-    // Start is called before the first frame update
+    [SerializeField] Button exitBT;
+    [SerializeField] Button reBT;
+    [SerializeField] Image textbar;
+    Color barcolor;
+    float barcolortime;
     void Start()
     {
+        barcolor = new Color(textbar.color.r,textbar.color.g, textbar.color.b, 0);
         volumeEnergy = new GameObject[volume.transform.childCount];
         for (int i = 0; i < volume.transform.childCount; i++)
         {
             volumeEnergy[i] = volume.transform.GetChild(i).gameObject;
         }
         //ÅØ½ºÆ® Æ¯Á¤¹®ÀÚ¸¸ ÀÔ·ÂÇÏ°Ô ÇÏ´Â ÄÚµå
-        nametextfield.onValueChanged.AddListener((w) => nametextfield.text = Regex.Replace(w, @"[^0-9a-zA-Z°¡-ÆR]",""));
+        nametextfield.onValueChanged.AddListener((w) => nametextfield.text = Regex.Replace(w, @"[^0-9a-zA-Z]",""));
     }
- 
+    public void Update()
+    {
+        barcolortime = Mathf.Sin(Time.time*10);
+        textbar.color = Color.Lerp(Color.red, barcolor,barcolortime);
+    }
     public void MenuCloseBT()
     {
         if (Soundsetting.activeSelf == true)
@@ -65,7 +75,7 @@ public class MenuButtonManager : MonoBehaviour
         {
             volumeEnergy[GameManager.Instance.volumeEnergyIndex].SetActive(true);
             GameManager.Instance.volumeEnergyIndex++;
-            SaveLoad.SaveGame();
+            SaveLoad.BasicSaveGame();
         }
         SoundManager.Instance.VolumeChange(GameManager.Instance.volumeEnergyIndex);
     }
@@ -75,7 +85,7 @@ public class MenuButtonManager : MonoBehaviour
         {
             GameManager.Instance.volumeEnergyIndex--;
             volumeEnergy[GameManager.Instance.volumeEnergyIndex].SetActive(false);
-            SaveLoad.SaveGame();
+            SaveLoad.BasicSaveGame();
         }
         SoundManager.Instance.VolumeChange(GameManager.Instance.volumeEnergyIndex);
     }
@@ -94,8 +104,9 @@ public class MenuButtonManager : MonoBehaviour
     public void FinishGame()//°ÔÀÓ ³¡
     {
         SaveLoad.SaveGame();
-        if(GameManager.Instance.viewpoint > GameManager.Instance.RankScore[GameManager.Instance.RankScore.Count-1].Item2
-            || GameManager.Instance.RankScore.Count < GameManager.Instance.MaxRankList)
+        if (GameManager.Instance.RankScore.Count < GameManager.Instance.MaxRankList||
+            GameManager.Instance.viewpoint > GameManager.Instance.RankScore[GameManager.Instance.RankScore.Count-1].Item2 
+          )
         {
             RankRegist.SetActive(true);
         }
@@ -113,8 +124,16 @@ public class MenuButtonManager : MonoBehaviour
             nametextfield.text = "aaa";
         }
         GameManager.Instance.RankScore.Add((nametextfield.text,GameManager.Instance.viewpoint));
-        GameManager.Instance.RankScore.Sort((a, b) => a.Item2.CompareTo(b.Item2));
-       SaveLoad.SaveGame();
+        GameManager.Instance.RankScore.Sort((a, b) => b.Item2.CompareTo(a.Item2));
+        if (GameManager.Instance.RankScore.Count > GameManager.Instance.MaxRankList)
+        {
+            GameManager.Instance.RankScore.RemoveAt(10);
+        }
+        exitBT.enabled = false;
+        reBT.enabled = false;
+        SaveLoad.BasicSaveGame();
+        BasicSaveData settingSaveData = SaveLoad.BasicLoadGame();
+        GameManager.Instance.PlayerSettingLoad(settingSaveData);
         RankRegist.SetActive(false);
         fadeInOut.gameObject.SetActive(true);
         fadeInOut.fadoutScene(0);

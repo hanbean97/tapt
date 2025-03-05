@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
@@ -8,13 +9,17 @@ public class MainMenuScript : MonoBehaviour
     public fadeInOut fade;
     public GameObject Rankingboard;
     public Button LoadButton;
+    public GameObject Soundpanel;
+    public GameObject volume;
+    GameObject[] volumeEnergy;
     void Start()
     {
         AdManager.Instance.ShowBanner();
-    }
-
-    void Update()
-    {
+        volumeEnergy = new GameObject[volume.transform.childCount];
+        for (int i = 0; i < volume.transform.childCount; i++)
+        {
+            volumeEnergy[i] = volume.transform.GetChild(i).gameObject;
+        }
         if (GameManager.Instance.GameOver == true)
         {
             LoadButton.interactable = false;
@@ -23,8 +28,8 @@ public class MainMenuScript : MonoBehaviour
         {
             LoadButton.interactable = true;
         }
-
     }
+
     public void NewGameBT()
     {
         GameManager.Instance.loadSetGameData(null);
@@ -56,4 +61,38 @@ public class MainMenuScript : MonoBehaviour
     {
         Rankingboard.SetActive(false);
     }
+
+    public void OpenSoundPanel()
+    {
+        Soundpanel.SetActive(true);
+        for (int i = 0; i < GameManager.Instance.volumeEnergyIndex; i++)
+        {
+            volumeEnergy[i].SetActive(true);
+        }
+    }
+    public void CloseSoundPanel()
+    {
+        Soundpanel.SetActive(false);
+    }
+    public void volumeUPBT()//家府 农扁包府滚瓢
+    {
+        if (GameManager.Instance.volumeEnergyIndex < volume.transform.childCount)
+        {
+            volumeEnergy[GameManager.Instance.volumeEnergyIndex].SetActive(true);
+            GameManager.Instance.volumeEnergyIndex++;
+            SaveLoad.BasicSaveGame();
+        }
+        SoundManager.Instance.VolumeChange(GameManager.Instance.volumeEnergyIndex);
+    }
+    public void volumeDOWNBT()
+    {
+        if (GameManager.Instance.volumeEnergyIndex > 0)
+        {
+            GameManager.Instance.volumeEnergyIndex--;
+            volumeEnergy[GameManager.Instance.volumeEnergyIndex].SetActive(false);
+            SaveLoad.BasicSaveGame();
+        }
+        SoundManager.Instance.VolumeChange(GameManager.Instance.volumeEnergyIndex);
+    }
+
 }
