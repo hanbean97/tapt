@@ -66,7 +66,10 @@ public class previewbluck : MonoBehaviour
                 }
             }
         }
-
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            BlockSaveBT();
+        }
         mainblock.SetActive(true);
     }
     private void Update()
