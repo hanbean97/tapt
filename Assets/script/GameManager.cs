@@ -34,6 +34,7 @@ public class GameManager : Singltons<GameManager>
     public int MaxRankList =10;
     public List<(string,int)> RankScore;//순위 이름 점수
     public bool OneSaveLife = false;
+    public bool notfirstPlayer = false;
     public void AddPoint()
     {
         Point++;
@@ -59,11 +60,13 @@ public class GameManager : Singltons<GameManager>
         {
             volumeEnergyIndex = bData.volume;
             RankScore = bData.ranker;
+            notfirstPlayer = bData.Firstch;
         }
         else
         {
             volumeEnergyIndex = 2;
             RankScore = new List<(string, int)>();
+            notfirstPlayer = false;
         }
     }
     public void loadSetGameData(GmaeSaveData tData)

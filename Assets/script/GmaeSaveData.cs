@@ -55,9 +55,11 @@ public class BasicSaveData
 {
     public int volume;
     public List<(string, int)> ranker;
+    public bool Firstch;
     public  BasicSaveData()
     {
         volume = GameManager.Instance.volumeEnergyIndex;
         ranker = GameManager.Instance.RankScore;
+        Firstch = GameManager.Instance.notfirstPlayer;
     }
 }
