@@ -21,6 +21,7 @@ public class MenuButtonManager : MonoBehaviour
     [SerializeField] Image textbar;
     Color barcolor;
     float barcolortime;
+    SoundManager.Bgm saveBgm;
     void Start()
     {
         barcolor = new Color(textbar.color.r,textbar.color.g, textbar.color.b, 0);
@@ -39,6 +40,7 @@ public class MenuButtonManager : MonoBehaviour
     }
     public void MenuCloseBT()
     {
+        SoundManager.Instance.changeBGM(saveBgm);
         if (Soundsetting.activeSelf == true)
         {
             Soundsetting.gameObject.SetActive(false);
@@ -48,6 +50,9 @@ public class MenuButtonManager : MonoBehaviour
     }
     public void MenuOpenBT()
     {
+        saveBgm = SoundManager.Instance.NowBGM();
+        SoundManager.Instance.changeBGM(SoundManager.Bgm.Loding);
+
         menu.gameObject.SetActive(true);
         Time.timeScale = 0f;
     }
@@ -66,6 +71,7 @@ public class MenuButtonManager : MonoBehaviour
      
     public void MainMenuGoBT()
     {
+        SoundManager.Instance.changeBGM(SoundManager.Bgm.StartScreen);
         fadeInOut.gameObject.SetActive(true);
         fadeInOut.fadoutScene(0);
     }
@@ -92,7 +98,6 @@ public class MenuButtonManager : MonoBehaviour
 
     public void ReStartGame()// 블록과 체력을 맨처음 상태로 돌리고 그대로 시작
     {
-        AdManager.Instance.ShowRewardedAd();
         GameManager.Instance.hp = GameManager.Instance.startHp;
         GameManager.Instance.GameOver = false;
         GameManager.Instance.gamestart = true;
@@ -112,6 +117,7 @@ public class MenuButtonManager : MonoBehaviour
         }
         else
         {
+            SoundManager.Instance.changeBGM(SoundManager.Bgm.StartScreen);
             fadeInOut.gameObject.SetActive(true);
             fadeInOut.fadoutScene(0);
         }
@@ -135,6 +141,7 @@ public class MenuButtonManager : MonoBehaviour
         BasicSaveData settingSaveData = SaveLoad.BasicLoadGame();
         GameManager.Instance.PlayerSettingLoad(settingSaveData);
         RankRegist.SetActive(false);
+        SoundManager.Instance.changeBGM(SoundManager.Bgm.StartScreen);
         fadeInOut.gameObject.SetActive(true);
         fadeInOut.fadoutScene(0);
     }

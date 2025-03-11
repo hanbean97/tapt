@@ -14,7 +14,6 @@ public class MainMenuScript : MonoBehaviour
     GameObject[] volumeEnergy;
     void Start()
     {
-        AdManager.Instance.ShowBanner();
         volumeEnergy = new GameObject[volume.transform.childCount];
         for (int i = 0; i < volume.transform.childCount; i++)
         {
@@ -32,6 +31,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void NewGameBT()
     {
+        SoundManager.Instance.changeBGM(SoundManager.Bgm.Loding);
         GameManager.Instance.loadSetGameData(null);
         GameManager.Instance.Loadch = false;// ?????????? ????
         fade.fadoutScene(1);
@@ -39,6 +39,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void LoadGameBT()
     {
+        SoundManager.Instance.changeBGM(SoundManager.Bgm.Loding);
         GmaeSaveData gmaeSaveData = SaveLoad.LoadGame();
         if (gmaeSaveData != null)
         {

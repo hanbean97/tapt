@@ -73,7 +73,7 @@ public class EnemysManager : Singltons<EnemysManager>
 
            if (bosss[bossindex].gameObject.activeSelf == false && bossMeet == true && bossactiv == false)
             {
-
+                SoundManager.Instance.changeBGM(SoundManager.Bgm.Boss);
                 bosss[bossindex].gameObject.SetActive(true);
                 bossactiv = true;
             }
@@ -89,6 +89,7 @@ public class EnemysManager : Singltons<EnemysManager>
                 bossMeet = false; 
                 bossmeetpoint = 0;
                 level++;
+                SoundManager.Instance.changeBGM(SoundManager.Bgm.Loding);
             }
         }
         NowEnemyHpView();

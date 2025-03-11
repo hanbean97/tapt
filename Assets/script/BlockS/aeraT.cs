@@ -201,18 +201,20 @@ public class aeraT : MonoBehaviour
                         bossSkill();// ????????
                         Savearea();// ???????? ???? ???????????? ?????? ????
                         SaveLoad.SaveGame();
-                       
+                        SoundManager.Instance.PlaySfx(SoundManager.Sfx.Select);
                     }
                     else
                     {
                         //?????????? ???????? ????
                         Scenemamhincrit.Instance.StartShake(1f, 1f);
+                        SoundManager.Instance.PlaySfx(SoundManager.Sfx.FailB);
                     }
                 }
                 else if (tgrid[i, j] == curren && checker[i, j] == true)
                 {
                     // ?????????? ????????????= ???? ???? ????
                     Scenemamhincrit.Instance.StartShake(1f,1f);
+                    SoundManager.Instance.PlaySfx(SoundManager.Sfx.FailB);
                 }
             }
         }
@@ -339,11 +341,13 @@ public class aeraT : MonoBehaviour
                     GameManager.Instance.AddPoint();
                 }
                 EnemysManager.Instance.currentEnemyDamage(totalpoint);
+                SoundManager.Instance.PlaySfx(SoundManager.Sfx.Attack);
             }
             else
             {
                 GameManager.Instance.AddPoint();
                 EnemysManager.Instance.currentEnemyDamage(1);
+                SoundManager.Instance.PlaySfx(SoundManager.Sfx.Attack);
             }
         }
         

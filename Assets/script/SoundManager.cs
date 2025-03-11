@@ -5,30 +5,29 @@ using UnityEngine.Rendering;
 
 public class SoundManager : PersistentSingleton<SoundManager>
 {
-    [SerializeField] float Volume;
     [Header("BGM")]
     [SerializeField] AudioClip[] bgmcilp;
     AudioSource bgmPlayer;
     [Header("SFX")]
     [SerializeField] AudioClip[] sfxcilp;
-    public int channels;//?????? ?????? ?????????? ??????
+    public int channels;
     int channelIndex;
     AudioSource[] sfxPlayer;
+    float onekan =0.14f;
 
-    public enum Bgm { StartScreen,Boss,Loding,Usually };
-    public enum Sfx { LevelUp, Attack, Laser ,Die, Talk}
+    public enum Bgm { StartScreen,Loding,Boss,Usually };
+    public enum Sfx { LevelUp, Attack, Laser ,Die, Talk,Select,BSave,FailB}
 
     private void Start()
     {
         Init();
-
         VolumeChange(GameManager.Instance.volumeEnergyIndex);
         changeBGM(Bgm.StartScreen);
     }
 
     void Init()
     {
-        // ?????? ???????? ??????
+        float Volume = GameManager.Instance.volumeEnergyIndex * onekan;
         GameObject bgmObj = new GameObject("BgmPlayer");
         bgmObj.transform.parent = transform;
         bgmPlayer = bgmObj.AddComponent<AudioSource>();
@@ -37,7 +36,6 @@ public class SoundManager : PersistentSingleton<SoundManager>
         bgmPlayer.volume = Volume;
         bgmPlayer .clip = bgmcilp[0];
     
-        // ?????? ???????? ??????
         GameObject sfxObj = new GameObject("sfxPlayer");
         sfxObj.transform.parent = transform;
         sfxPlayer = new AudioSource[channels];
@@ -68,12 +66,36 @@ public class SoundManager : PersistentSingleton<SoundManager>
         bgmPlayer.clip = bgmcilp[(int)bgm];
         bgmPlayer.Play();
     }
-    public void StopBGM()
+    public Bgm NowBGM()
     {
-        bgmPlayer.Stop();
+        for(int i=0; i< bgmcilp.Length;i++)
+        {
+            if(bgmPlayer.clip == bgmcilp[i])
+            {
+                return (Bgm)i;
+            }
+        }
+        return Bgm.StartScreen;
+    }
+
+    public void StopBGMToggle(bool Onoffes)
+    {
+        if (Onoffes == true)
+        {
+            bgmPlayer.Play();
+        }
+        else
+        {
+            bgmPlayer.Stop();
+        }
     }
     public void VolumeChange(int volume)
     {
-        bgmPlayer.volume = volume;
+        bgmPlayer.volume = (volume*onekan);
+        for (int i = 0; i < sfxPlayer.Length; i++)
+        {
+            sfxPlayer[i].volume = (volume * onekan);
+        }
     }
+
 }
