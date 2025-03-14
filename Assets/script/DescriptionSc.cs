@@ -12,11 +12,13 @@ public class DescriptionSc : MonoBehaviour
             Tutori.SetActive(true);
             GameManager.Instance.notfirstPlayer = true;
             SaveLoad.BasicSaveGame();
+            Time.timeScale = 0;
         }
     }
 
     public void CloseTuto()
     {
         Tutori.SetActive(false);
+        Time.timeScale = 1f;
     }
 }
