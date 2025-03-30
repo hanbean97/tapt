@@ -4,35 +4,16 @@ using UnityEngine;
 
 public class BackGrounds : MonoBehaviour
 {
-    [SerializeField] Sprite[] SpaceWorld;
-    [SerializeField] Transform[] groundsObj;
     SpriteRenderer sprR;
-    [SerializeField] float speed =1;
-    float sprScale;
-    int nowBackstage=0;
-    int nowLevel =0;
+    Material mat;
+    [SerializeField] float speed = 1;
     private void Awake()
     {
-        //한ㅘㄹ
-
         sprR = GetComponent<SpriteRenderer>();
-        sprScale = SpaceWorld[1].bounds.size.y * groundsObj[1].localScale.y;
-      
+        mat = sprR.material;
     }
     void Update()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            groundsObj[i].Translate(Vector2.down * speed * Time.deltaTime);//스프라이트 스케일
-            if (groundsObj[i].position.y < -sprScale)
-            {
-                groundsObj[i].position = new Vector3(groundsObj[i].position.x , sprScale*2, groundsObj[i].position.z);
-            }
-        }
-
-    }
-    private void OnBecameInvisible()
-    {
-        
+        mat.mainTextureOffset += Vector2.up * speed * Time.deltaTime;
     }
 }
