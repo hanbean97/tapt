@@ -16,7 +16,7 @@ public class TestSc : MonoBehaviour
 
         TextMeshProUGUI[]  chch = uiui.GetComponentsInChildren<TextMeshProUGUI>();
         Debug.Log(chch.Length);
-       
+        Debug.Log(Application.persistentDataPath);
     }
    
 }

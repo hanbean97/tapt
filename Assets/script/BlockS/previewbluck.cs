@@ -19,27 +19,26 @@ public class previewbluck : MonoBehaviour
     {
         for (int i = 0; i < datablock.Length; i++)
         {
-            datablock[i].Initialize();// datablockµéÀÇtypecell ¾È¿¡ µ¥ÀÌÅÍ ³Ö±â
+            datablock[i].Initialize();// datablockë“¤ì˜typecell ì•ˆì— ë°ì´í„° ë„£ê¸°
         }
     }
 
-    public void SpawnPiece()//»õ·Î¿î ºí·Ï Á¤º¸ °»½ÅÇØ¾ßÇÒ¶§ È£Ãâ
+    public void SpawnPiece()//ìƒˆë¡œìš´ ë¸”ë¡ ì •ë³´ ê°±ì‹ í•´ì•¼í• ë•Œ í˜¸ì¶œ
     {
         System.Random rnd = new System.Random();
 
-        if (blocktable.Count == 0)//ºí·ÏÀÌ ÀüºÎ ³ª¿Ã¶§±îÁö °°Àº°Ô ¾È³ª¿Àµµ·Ï ¼³Á¤
+        if (blocktable.Count == 0)//ë¸”ë¡ì´ ì „ë¶€ ë‚˜ì˜¬ë•Œê¹Œì§€ ê°™ì€ê²Œ ì•ˆë‚˜ì˜¤ë„ë¡ ì„¤ì •
         {
-            blocktable.AddRange(new List<int> { 0, 1, 2, 3, 4, 5 });
+            blocktable.AddRange(new List<int> { 0, 1, 2, 3, 4, 5 });//ë¸”ë¡ì„ ë¦¬ìŠ¤íŠ¸ë¥¼ ìƒˆë¡œ ë„£ì–´ì¤€ë‹¤
         }
-
-        int randomindex = rnd.Next(blocktable.Count);
+        int randomindex = rnd.Next(blocktable.Count);//ì¹´ìš´íŠ¸ ì•„ë˜ì˜ ëœë¤í•œ ì •ìˆ˜ë¥¼ ë°˜í™˜
         int random = blocktable[randomindex];
-        blocktable.RemoveAt(randomindex);
-        Databiuck data = datablock[random];
+        blocktable.RemoveAt(randomindex);//ì„ íƒëœ ë¸”ë¡ì€ ì•ìœ¼ë¡œ ë‚˜ì˜¬ ë¸”ë¡ì—ì„œ ì œê±°
+        Databiuck data = datablock[random];//í•´ë‹¹ ë²ˆí˜¸ì— í•´ë‹¹í•˜ëŠ” ë¸”ë¡ ëª¨ì–‘ ë°ì´í„°
 
-        activepiece.Initialize(data);// ÇÇ½º¿¡ ÀúÀåµÉ µ¥ÀÌÅÍ¸¦ º¸³¿
+        activepiece.Initialize(data);//ë‚˜ì˜¬ ë¸”ë¡ì˜ ë°©í–¥ê³¼ ëª¨ì–‘ ë°ì´í„°ì— í•´ë‹¹ ë°ì´í„°ë¥¼ ë„£ì–´ì¤€ë‹¤
 
-        blockview();
+        blockview();//ì¸ê²Œì„ìƒ ë³´ì—¬ì£¼ëŠ” ë¸”ë¡ í™œì„±í™”
     }
 
     // Start is called before the first frame update
@@ -56,7 +55,7 @@ public class previewbluck : MonoBehaviour
             {
                 blocktable = GameManager.Instance.bTable;
             }
-            for (int i = 0; i < Data.Cell.Count; i++)// Piece¾È¿¡Databiuck.BTypeÀÇ enumÀÇ Á¤º¸¸¦ °¡Á®¿Í Ã£´Â´Ù
+            for (int i = 0; i < Data.Cell.Count; i++)// Pieceì•ˆì—Databiuck.BTypeì˜ enumì˜ ì •ë³´ë¥¼ ê°€ì ¸ì™€ ì°¾ëŠ”ë‹¤
             {
                 if (GameManager.Instance.preview == i)
                 {
@@ -66,10 +65,7 @@ public class previewbluck : MonoBehaviour
                 }
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            BlockSaveBT();
-        }
+   
         mainblock.SetActive(true);
     }
     private void Update()
@@ -87,10 +83,16 @@ public class previewbluck : MonoBehaviour
             direct = 0;
         }
 
-        if (saveBTch == true)//save ¹öÆ°ÀÌ ´­¸°°É aeraT¿¡ ¾Ë·ÁÁÖ°í false
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+        {
+            BlockSaveBT();
+        }
+
+        if (saveBTch == true)//save ë²„íŠ¼ì´ ëˆŒë¦°ê±¸ aeraTì— ì•Œë ¤ì£¼ê³  false
         {
             saveBTch = false;
         }
+
     }
 
     public void blockview()
@@ -104,7 +106,7 @@ public class previewbluck : MonoBehaviour
             int x = activepiece.cells[i].x;
             int y = activepiece.cells[i].y;
 
-            switch (x, y)// ´ÙÀ½ ºí·Ï º¸¿©ÁÖ±â
+            switch (x, y)// ë‹¤ìŒ ë¸”ë¡ ë³´ì—¬ì£¼ê¸°
             {
                 case (0, 1):
                     upblock.SetActive(true);
@@ -121,12 +123,12 @@ public class previewbluck : MonoBehaviour
             }
         }
     }
-    public void RoteBT(int direction)//¹öÆ°¿¡¼­ ¸Å°³º¯¼ö·Î ¹ŞÀ½
+    public void RoteBT(int direction)//ë²„íŠ¼ì—ì„œ ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ìŒ
     {
         direct = direction;
     }
 
-    public void BlockSaveBT()// ¹öÆ° ´©¸¦½Ã ¼¼ÀÌºêºí·°¿¡ µ¥ÀÌÅÍ°¡ÀÖ´ÂÁö ¾ø´ÂÁö ÆÇ´ÜÇØ¼­ ÇÔ¼ö¸¦ È£Ãâ
+    public void BlockSaveBT()// ë²„íŠ¼ ëˆ„ë¥¼ì‹œ ì„¸ì´ë¸Œë¸”ëŸ­ì— ë°ì´í„°ê°€ìˆëŠ”ì§€ ì—†ëŠ”ì§€ íŒë‹¨í•´ì„œ í•¨ìˆ˜ë¥¼ í˜¸ì¶œ
     {
         if (BlockSave.piece.bluckdata.BType == bluckType.None)
         {

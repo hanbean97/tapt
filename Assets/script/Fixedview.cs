@@ -11,7 +11,7 @@ public class Fixedview : MonoBehaviour
     private void Start()
     {
         //SetReasolution1();
-        Screen.SetResolution(1080,1920,false);
+     //   Screen.SetResolution(1080,1920,false);
     }
     private void Update()
     {
