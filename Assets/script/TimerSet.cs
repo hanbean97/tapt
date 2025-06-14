@@ -12,17 +12,22 @@ public class TimerSet : MonoBehaviour
 
     private async void Start()//
     {
-        await WebTime1();
+        await WebTime1(googleurl);
     }
 
-    async Task WebTime1()
+    async Task<string> WebTime1(string url)
     {
         UnityWebRequest request = new UnityWebRequest();
-        using (request = UnityWebRequest.Get(googleurl))
+        using (request = UnityWebRequest.Get(url))
         {
             var oper= request.SendWebRequest();
-            while (oper.isDone) 
-            await Task.Yield(); 
+            while (!oper.isDone) 
+            await Task.Yield();
+            if(request.result != UnityWebRequest.Result.Success)
+            {
+                throw new UnityException("네트워크오류 :"+ request.error);
+            }
+            return request.result.ToString();
         }
            
     }
