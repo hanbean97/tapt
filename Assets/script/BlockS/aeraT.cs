@@ -96,6 +96,7 @@ public class aeraT : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.gamestart == false) return;
 #if MOBILE_INPUT
         if(Input.touchCount >0)
         {

@@ -4,34 +4,65 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using System.Net.Http;
+using System;
 public class TimerSet : MonoBehaviour
 {
-    [SerializeField] TMP_Text NowTime;
-    string googleurl = "www.google.com";
-
-    private async void Start()//
-    {
-        await WebTime1(googleurl);
-    }
-
-    async Task<string> WebTime1(string url)
-    {
-        UnityWebRequest request = new UnityWebRequest();
-        using (request = UnityWebRequest.Get(url))
+    [SerializeField] TextMeshProUGUI NowTime;
+    string googleurl = "https://www.google.com";
+    DateTime currentTime;
+    bool TimeGet = false;
+    
+        private async void Start()//
         {
-            var oper= request.SendWebRequest();
-            while (!oper.isDone) 
-            await Task.Yield();
-            if(request.result != UnityWebRequest.Result.Success)
-            {
-                throw new UnityException("네트워크오류 :"+ request.error);
-            }
-            return request.result.ToString();
+            NowTime.text = "Loding";
+            await WebTime1(googleurl);
         }
-           
-    }
 
+
+        async Task WebTime1(string url)
+        {
+           using (HttpClient client = new HttpClient())
+           {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(googleurl);
+                response.EnsureSuccessStatusCode();//200 Ok응답 확인
+                if(response.Headers.Date.HasValue)
+                {
+                   DateTimeOffset serverTimeUtc = response.Headers.Date.Value;// UTC표준 시간
+                    TimeZoneInfo koreaTimezone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Seoul");//또는 ("Asia/seoul)")
+                    DateTime koreaTimeFromServer = TimeZoneInfo.ConvertTime(serverTimeUtc,koreaTimezone).DateTime;
+
+                    Debug.Log(koreaTimeFromServer);
+                    currentTime = koreaTimeFromServer;
+                    TimeGet = true;
+
+
+                }
+                else
+                {
+                    Debug.Log("가져온 정보에 Date 헤더가 없 ");
+                    NowTime.text = "GetTime_Fail";
+                }
+            }
+            catch(HttpRequestException excep)
+            {
+                Debug.Log($"요청오류 : {excep.Message}");
+                NowTime.text = "GetTime_Fail";
+            }
+            catch(Exception e)
+            {
+                Debug.Log($"일반오류 : {e.Message}");
+                NowTime.text = "GetTime_Fail";
+            }
+
+           }
+
+     
+
+        }
+   
     IEnumerator WebTime2()//코루틴 전용
     {
         UnityWebRequest request = new UnityWebRequest();
@@ -44,10 +75,19 @@ public class TimerSet : MonoBehaviour
             }
             else
             {
-                string data = request.GetResponseHeader("data");
-                Debug.Log(data);
+                string date = request.GetResponseHeader("date");
+                Debug.Log(date);
             }
         }
+    }
+
+
+    private void Update()
+    {
+        if (TimeGet == false) return;
+
+        currentTime = currentTime.AddSeconds(Time.deltaTime);
+        NowTime.text = $"{currentTime}";
     }
 
 
