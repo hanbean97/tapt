@@ -31,7 +31,7 @@ public class TimerSet : MonoBehaviour
                 if(response.Headers.Date.HasValue)
                 {
                    DateTimeOffset serverTimeUtc = response.Headers.Date.Value;// UTC표준 시간
-                    TimeZoneInfo koreaTimezone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Seoul");//또는 ("Asia/seoul)")
+                    TimeZoneInfo koreaTimezone = TimeZoneInfo.FindSystemTimeZoneById("Korea Standard Time");//또는 ("Asia/Seoul)")
                     DateTime koreaTimeFromServer = TimeZoneInfo.ConvertTime(serverTimeUtc,koreaTimezone).DateTime;
 
                     Debug.Log(koreaTimeFromServer);
@@ -87,7 +87,7 @@ public class TimerSet : MonoBehaviour
         if (TimeGet == false) return;
 
         currentTime = currentTime.AddSeconds(Time.deltaTime);
-        NowTime.text = $"{currentTime}";
+        NowTime.text = $"{currentTime.Hour} : {currentTime.Minute}";
     }
 
 
