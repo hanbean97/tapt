@@ -40,6 +40,7 @@ public class aeraT : MonoBehaviour
     [SerializeField] TMP_Text NewScore;
     [SerializeField] TMP_Text LastScore;
     [SerializeField] GameObject rewardBT;
+    [SerializeField] attackanimetor playerattack;
     void Start()
     {
         width = GameManager.Instance.width;
@@ -340,12 +341,14 @@ public class aeraT : MonoBehaviour
                 {
                     GameManager.Instance.AddPoint();
                 }
+                playerattack.goattack();
                 EnemysManager.Instance.currentEnemyDamage(totalpoint);
                 SoundManager.Instance.PlaySfx(SoundManager.Sfx.Attack);
             }
             else
             {
                 GameManager.Instance.AddPoint();
+                playerattack.goattack();
                 EnemysManager.Instance.currentEnemyDamage(1);
                 SoundManager.Instance.PlaySfx(SoundManager.Sfx.Attack);
             }
