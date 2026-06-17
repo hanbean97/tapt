@@ -39,16 +39,13 @@ public class TimerSet : MonoBehaviour
  TimeZoneInfo koreaTimezone = TimeZoneInfo.FindSystemTimeZoneById("Korea Standard Time");
 #endif
                     DateTime koreaTimeFromServer = TimeZoneInfo.ConvertTime(serverTimeUtc,koreaTimezone).DateTime;
-
                     Debug.Log(koreaTimeFromServer);
                     currentTime = koreaTimeFromServer;
                     TimeGet = true;
-
-
                 }
                 else
                 {
-                    Debug.Log("가져온 정보에 Date 헤더가 없 ");
+                    Debug.Log("가져온 정보에 Date 헤더가 없다면 ");
                     NowTime.text = "GetTime_Fail";
                 }
             }
@@ -62,11 +59,7 @@ public class TimerSet : MonoBehaviour
                 Debug.Log($"일반오류 : {e.Message}");
                 NowTime.text = "GetTime_Fail";
             }
-
            }
-
-     
-
         }
    
     IEnumerator WebTime2()//코루틴 전용
