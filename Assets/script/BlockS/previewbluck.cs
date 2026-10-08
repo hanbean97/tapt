@@ -26,10 +26,13 @@ public class previewbluck : MonoBehaviour
     public void SpawnPiece()//새로운 블록 정보 갱신해야할때 호출
     {
         System.Random rnd = new System.Random();
-
+       
         if (blocktable.Count == 0)//블록이 전부 나올때까지 같은게 안나오도록 설정
         {
-            blocktable.AddRange(new List<int> { 0, 1, 2, 3, 4, 5 });//블록을 리스트를 새로 넣어준다
+            for(int i = 0; i < Data.Cell.Count -1 ;i++)
+            {
+                blocktable.Add(i);//블록을 리스트를 새로 넣어준다
+            }
         }
         int randomindex = rnd.Next(blocktable.Count);//카운트 아래의 랜덤한 정수를 반환
         int random = blocktable[randomindex];

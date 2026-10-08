@@ -6,13 +6,15 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Net.Http;
 using System;
+using UnityEngine.UI;
 public class TimerSet : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI NowTime;
     string googleurl = "https://www.google.com";
     DateTime currentTime;
     bool TimeGet = false;
-    
+    [SerializeField] Sprite[] batteryimg;
+    [SerializeField] Image nowbatteryimg;
         private async void Start()//
         {
             NowTime.text = "Loding";
@@ -80,14 +82,27 @@ public class TimerSet : MonoBehaviour
         }
     }
 
-
+    private void Awake()
+    {
+#if MOBILE_INPUT
+       nowbatteryimg.gameObject.SetActive(true);
+#endif
+    }
     private void Update()
     {
+#if MOBILE_INPUT
+        nowbatteryimgUi();
+#endif 
         if (TimeGet == false) return;
 
         currentTime = currentTime.AddSeconds(Time.deltaTime);
         NowTime.text = $"{currentTime.Hour} : {currentTime.Minute.ToString("D2")}";
     }
 
+    void nowbatteryimgUi()
+    {
+        int nowbattery = (int)(SystemInfo.batteryLevel * 100) / 16;
+        nowbatteryimg.sprite = batteryimg[nowbattery];
 
+    }
 }

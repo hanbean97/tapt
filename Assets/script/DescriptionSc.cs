@@ -7,12 +7,14 @@ public class DescriptionSc : MonoBehaviour
     [SerializeField] GameObject Tutori;
     private void Start()
     {
-       // if(GameManager.Instance.notfirstPlayer == false)
+        if(GameManager.Instance.Loadch == false)
+        {
             Tutori.SetActive(true);
             GameManager.Instance.notfirstPlayer = true;
             SaveLoad.BasicSaveGame();
             Time.timeScale = 0;
-        GameManager.Instance.gamestart = false;
+            GameManager.Instance.gamestart = false;
+        }
     }
 
     public void CloseTuto()
